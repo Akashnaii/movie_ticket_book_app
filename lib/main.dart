@@ -9,6 +9,7 @@ import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/discription.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
+import 'package:moviemate/pages/theater.dart';
 
 
 void main() async{
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
   return MaterialApp(
-    home:  SplashScreen(),
+    home:  theater(),
   );
   }
 }
