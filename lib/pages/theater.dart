@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class theater extends StatefulWidget {
-  const theater({super.key});
+class Theater extends StatefulWidget {
+  const Theater({Key? key});
 
   @override
-  State<theater> createState() => _theaterState();
+  State<Theater> createState() => _TheaterState();
 }
 
-class _theaterState extends State<theater> {
+class _TheaterState extends State<Theater> {
+  final firestore =
+      FirebaseFirestore.instance.collection('theater').snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,54 +19,85 @@ class _theaterState extends State<theater> {
         child: Column(
           children: [
             Padding(padding: EdgeInsets.only(bottom: 10)),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (contex, index){
-                  return  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                          color: Color(0x97C5B7FF),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            StreamBuilder<QuerySnapshot>(
+              stream: firestore,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshots) {
+                if (snapshots.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (snapshots.hasError) {
+                  return Text('Some error is occurring');
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshots.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFFFFFFFF),
+                          ),
+                          child: Column(
                             children: [
-                              Text('theater name assing'),
-                              Spacer(),
-                              Icon(Icons.location_on),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      child: Text(
+                                          snapshots.data!.docs[index]['name'],style: TextStyle(fontWeight: FontWeight.bold),)),
+                                  Spacer(),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.location_on),
+                                  ),
+                                ],
+                              ),
+                              // Use in the showtime .. list..
+                              Row(
+                                children: List.generate(
+                                  4,
+                                  (index) => Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: InkWell(
+                                      onTap: () {
+                                        print('tapped');
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '10:00 am',
+                                            style: TextStyle(
+                                                color: Color(0xFF4BB33B)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          // use in the showtime .. list..
-                          SizedBox(height: 6),
-                         Row(
-                           children: List.generate(
-                             4,
-                                 (index) => Padding(
-                                   padding: const EdgeInsets.only(left : 7 , right: 10, top: 20),
-                                   child: Container(
-
-                                     color: Colors.white,
-                               height: 30,
-                               child: Center(child: Text('10:00 am')), // Replace with actual time
-                             ),
-                                 ),
-                           ),
-                         )
-
-                        ],
-                      ),
-
-                    ),
-                  );
-                },
-              ),
-            )
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
