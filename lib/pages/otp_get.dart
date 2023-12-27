@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
@@ -14,7 +15,7 @@ class OtpGet extends StatefulWidget {
 class _OtpGetState extends State<OtpGet> {
   TextEditingController otpController = TextEditingController();
   String verificationId = "";
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   Future<void> _verifyOtp() async {
     try {
       // Create a PhoneAuthCredential using the verification ID and entered OTP
@@ -63,6 +64,7 @@ class _OtpGetState extends State<OtpGet> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+    var code="";
     return Scaffold(
       // margin and padding maate..container usee..
       body: Container(
@@ -100,8 +102,11 @@ class _OtpGetState extends State<OtpGet> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             length: 6,
+              onChanged: (value){
+                code=value;
+              },
               validator: (s) {
-                return s == '123456' ? null : 'incorrect pin';
+                return s == verificationId ? null : 'incorrect pin';
               },
 
             ),
@@ -113,9 +118,19 @@ class _OtpGetState extends State<OtpGet> {
                 height: 40,
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
+                    try{
+                      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId:  phonenoscreen.verify, smsCode:code);
+                      // Sign the user in (or link) with the credential
+                      await auth.signInWithCredential(credential);
+                      Navigator.pushAndRemoveUntil(
+                          context, "home_p" as Route<Object?>,(route) => false);
+                    }
+                    catch(e){
+                      print('wrong otp');
+                    }
                     _verifyOtp();
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const nav()));
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

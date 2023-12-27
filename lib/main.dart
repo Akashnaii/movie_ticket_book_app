@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moviemate/category/1_gridv.dart';
 import 'package:moviemate/category/tranding.dart';
 import 'package:moviemate/pages/home_p.dart';
+import 'package:moviemate/pages/otp_get.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:moviemate/pages/naviagation_bar.dart';
 import 'package:moviemate/pages/seat_selection.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
   return MaterialApp(
-    home:  SplashScreen(),
+    debugShowCheckedModeBanner: false,
+      home:  SplashScreen(),
   );
   }
 }

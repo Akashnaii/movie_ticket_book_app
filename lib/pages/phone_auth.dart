@@ -6,6 +6,8 @@ import 'package:moviemate/pages/otp_get.dart';
 class phonenoscreen extends StatefulWidget {
   const phonenoscreen({super.key});
 
+  static String verify="";
+
   @override
   State<phonenoscreen> createState() => _phonenoscreenState();
 }
@@ -79,9 +81,17 @@ class _phonenoscreenState extends State<phonenoscreen> {
                       phoneNumber: '+91${phonecontroller.text}',
                       verificationCompleted:
                           (PhoneAuthCredential credential) {},
-                      verificationFailed: (FirebaseAuthException e) {},
-                      codeSent: (String verificationId, int? resendToken) {},
-                      codeAutoRetrievalTimeout: (String verificationId) {},
+                      verificationFailed: (FirebaseAuthException e) {
+                        debugPrint("error phoneOtp : $e");
+                      },
+                      codeSent: (String verificationId, int? resendToken) {
+                        phonenoscreen.verify=verificationId;
+
+                      },
+
+                      codeAutoRetrievalTimeout: (String verificationId) {
+                      },
+
                     );
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => OtpGet()));
