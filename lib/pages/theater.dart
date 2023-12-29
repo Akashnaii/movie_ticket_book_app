@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
   const Theater({Key? key});
@@ -9,6 +10,7 @@ class Theater extends StatefulWidget {
 }
 
 class _TheaterState extends State<Theater> {
+  final title = FirebaseFirestore.instance.collection('movies').snapshots();
   final firestore =
       FirebaseFirestore.instance.collection('theater').snapshots();
 
@@ -50,10 +52,80 @@ class _TheaterState extends State<Theater> {
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
                                       child: Text(
-                                          snapshots.data!.docs[index]['name'],style: TextStyle(fontWeight: FontWeight.bold),)),
+                                        snapshots.data!.docs[index]['name'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                   Spacer(),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20)),
+                                          ),
+                                          context: context,
+                                          builder: (context) => SingleChildScrollView(
+                                            child: Container(
+                                                  padding: EdgeInsets.all(20),
+                                                  height: 220,
+                                                  width: 200,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.center,
+                                                    children: [
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            'Name : ',
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                FontWeight.w300),
+                                                          ),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(context).size.width*0.7,
+                                                            child: Text(
+                                                              '${snapshots.data!.docs[index]['name']}',
+                                                              style: TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                  FontWeight.w300),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      SizedBox(height: 15),
+                                                      Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            'Address : ',
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                FontWeight.w300),
+                                                          ),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(context).size.width*0.6,
+                                                            child: Text(
+                                                              '${snapshots.data!.docs[index]['address']}',
+                                                              style: TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                  FontWeight.w300),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                          ));
+                                    },
                                     icon: Icon(Icons.location_on),
                                   ),
                                 ],
@@ -66,7 +138,10 @@ class _TheaterState extends State<Theater> {
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
                                       onTap: () {
-                                        print('tapped');
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Seatselect()),
+                                        );
                                       },
                                       child: Container(
                                         height: 30,
