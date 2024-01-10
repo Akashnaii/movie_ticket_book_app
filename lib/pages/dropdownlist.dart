@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class dropdownlist extends StatefulWidget {
   const dropdownlist({super.key});
 
@@ -23,15 +22,15 @@ class _dropdownlistState extends State<dropdownlist> {
             height: 2,
             color: Colors.black,
           ),
-          onChanged: (newValue){
+          onChanged: (newValue) {
             setState(() {
-               dropdownValue = newValue!;
+              dropdownValue = newValue!;
             });
           },
           items: const [
             DropdownMenuItem<String>(
               value: 'Movies',
-              child: Text("Movies"),
+              child: Text("picture"),
             ),
             DropdownMenuItem<String>(
               value: 'Standup Comedy',
