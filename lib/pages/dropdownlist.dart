@@ -15,7 +15,7 @@ class _dropdownlistState extends State<dropdownlist> {
       body: Center(
         child: DropdownButton<String>(
           value: dropdownValue,
-          hint: Text("Select movies"),
+          hint: Text("Select"),
           icon: const Icon(Icons.menu),
           style: const TextStyle(color: Colors.black),
           underline: Container(
