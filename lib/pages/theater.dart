@@ -53,7 +53,8 @@ class _TheaterState extends State<Theater> {
                                           snapshots.data!.docs[index]['name'],style: TextStyle(fontWeight: FontWeight.bold),)),
                                   Spacer(),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                    },
                                     icon: Icon(Icons.location_on),
                                   ),
                                 ],
