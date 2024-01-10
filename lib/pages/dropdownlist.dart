@@ -30,7 +30,7 @@ class _dropdownlistState extends State<dropdownlist> {
           items: const [
             DropdownMenuItem<String>(
               value: 'Movies',
-              child: Text("picture"),
+              child: Text("Movies"),
             ),
             DropdownMenuItem<String>(
               value: 'Standup Comedy',
