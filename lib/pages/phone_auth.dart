@@ -95,7 +95,7 @@ class _phonenoscreenState extends State<phonenoscreen> {
                               borderRadius: BorderRadius.circular(15)))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Icon(Icons.confirmation_num), Text("Send OTP")],
+                    children: [Icon(Icons.confirmation_num),SizedBox(width: 10), Text("Send the OTP")],
                   ),
                 ),
               ),

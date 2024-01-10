@@ -1,107 +1,164 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-
 class Seatselect extends StatefulWidget {
-  const Seatselect({super.key});
+  const Seatselect({Key? key}) : super(key: key);
 
   @override
   State<Seatselect> createState() => _SeatselectState();
 }
 
 class _SeatselectState extends State<Seatselect> {
-
-  List<List<bool>> selectedSeats = List.generate(
-      8, (row) => List.generate(8, (column) => false)); // 8x8 seat grid
+  List<List<bool>> selectedSeatsA = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  ); //
+  // 4*4 seat grid
+  List<List<bool>> selectedSeatsA1 = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  );
+  List<List<bool>> selectedSeatsB = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  );
+  List<List<bool>> selectedSeatsB1 = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  );
+  List<List<bool>> selectedSeatsC = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  );
+  List<List<bool>> selectedSeatsC1 = List.generate(
+    4,
+    (row) => List.generate(4, (column) => false),
+  );
 
   Map<String, double> seatPrices = {
-    'A1': 10.0,
-    'B2': 8.0,
-    'C3': 12.0,
+    'A1': 500, 'A2': 500, 'A3': 500, 'A4': 500, 'A5': 500, 'A6': 500, 'A7': 500,
+    'A8': 500,
+    'B1': 400, 'B2': 400, 'B3': 400, 'B4': 400, 'B5': 400, 'B6': 400, 'B7': 400,
+    'B8': 400,
+    'C1': 400, 'C2': 400, 'C3': 400, 'C4': 400, 'C5': 400, 'C6': 400, 'C7': 400,
+    'C8': 400,
+    'D1': 400, 'D2': 400, 'D3': 400, 'D4': 400, 'D5': 400, 'D6': 400, 'D7': 400,
+    'D8': 400,
+    'E1': 300, 'E2': 300, 'E3': 300, 'E4': 300, 'E5': 300, 'E6': 300, 'E7': 300,
+    'E8': 300,
+    'F1': 300, 'F2': 300, 'F3': 300, 'F4': 300, 'F5': 300, 'F6': 300, 'F7': 300,
+    'F8': 300,
+    'G1': 300, 'G2': 300, 'G3': 300, 'G4': 300, 'G5': 300, 'G6': 300, 'G7': 300,
+    'G8': 300,
+    'H1': 300, 'H2': 300, 'H3': 300, 'H4': 300, 'H5': 300, 'H6': 300, 'H7': 300,
+    'H8': 300,
     // Add more seat prices as needed
   };
-
-  double totalPrice = 0.0;
+  StreamController<double> totalPriceController = StreamController<double>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
-        title: Text('Seat Selection'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Select your seats:',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            buildSeatGrid(),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Handle seat selection logic
-                List<String> selectedSeatNumbers = getSelectedSeats();
-                double total = calculateTotalPrice(selectedSeatNumbers);
-                setState(() {
-                  totalPrice = total;
-                });
-                print('Selected Seats: $selectedSeatNumbers');
-              },
-              child: Text('pay - \$${totalPrice.toStringAsFixed(2)}'),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.pinkAccent,
-            )),
-          ],
+        backgroundColor: Colors.black,
+        title: Text(
+          'Book your seats:',
+          style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
         ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 30),
+          Text('Price [ A ]',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10),
+          Text('500/-',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildSeatGridA(),
+                buildSeatGridA1(),
+              ],
+            ),
+          ),
+          SizedBox(height: 15),
+          Text('Price[ B,C,D ]',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          Text('400/-',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildSeatGridB(),
+                buildSeatGridB2(),
+              ],
+            ),
+          ),
+          SizedBox(height: 15),
+          Text('Price[ E,F,G,H ]',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          Text('300/-',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildSeatGridC(),
+                buildSeatGridC3(),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          StreamBuilder<double>(
+            stream: totalPriceController.stream,
+            builder: (context, snapshot) {
+              return ElevatedButton(
+                onPressed: () {
+                  List<String> selectedSeatNumbers = getSelectedSeats();
+                  double total = calculateTotalPrice(selectedSeatNumbers);
+                  totalPriceController.add(total);
+                  print('Selected Seats: $selectedSeatNumbers');
+                },
+                child: Text(
+                    'Pay - \₹ ${snapshot.data?.toStringAsFixed(2) ?? "0.00"}'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 
-  Widget buildSeatGrid() {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-      ),
-      child: Column(
-        children: List.generate(
-          8,
-              (row) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              8,
-                  (column) => GestureDetector(
-                onTap: () {
-                  // Toggle seat selection
-                  setState(() {
-                    selectedSeats[row][column] = !selectedSeats[row][column];
-                  });
-                },
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: selectedSeats[row][column]
-                        ? Colors.green
-                        : Colors.grey,
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${String.fromCharCode(row + 65)}${column + 1}',
-                      style: TextStyle(
-                        color: selectedSeats[row][column]
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+  Widget buildSeatGridA() {
+    return Column(
+      children: List.generate(
+        1,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsA);
+              },
+              child:
+                  buildSeatContainer(selectedSeatsA[row][column], row, column),
             ),
           ),
         ),
@@ -109,12 +166,167 @@ class _SeatselectState extends State<Seatselect> {
     );
   }
 
+  Widget buildSeatGridA1() {
+    return Column(
+      children: List.generate(
+        1,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsA1);
+              },
+              child: buildSeatContainer(
+                  selectedSeatsA1[row][column], row, column + 4),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSeatGridB() {
+    return Column(
+      children: List.generate(
+        3,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsB);
+              },
+              child: buildSeatContainer(
+                  selectedSeatsB[row][column], row + 1, column),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSeatGridB2() {
+    return Column(
+      children: List.generate(
+        3,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsB1);
+              },
+              child: buildSeatContainer(
+                  selectedSeatsB1[row][column], row + 1, column + 4),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSeatGridC() {
+    return Column(
+      children: List.generate(
+        4,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsC);
+              },
+              child: buildSeatContainer(
+                  selectedSeatsC[row][column], row + 4, column),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSeatGridC3() {
+    return Column(
+      children: List.generate(
+        4,
+        (row) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            4,
+            (column) => GestureDetector(
+              onTap: () {
+                toggleSeatSelection(row, column, selectedSeatsC1);
+              },
+              child: buildSeatContainer(
+                  selectedSeatsC1[row][column], row + 4, column + 4),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSeatContainer(bool isSelected, int row, int column) {
+    return Container(
+      width: 30,
+      height: 30,
+      alignment: Alignment.center,
+      margin: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.green : Colors.grey,
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        '${String.fromCharCode(row + 65)}${column + 1}',
+        style: TextStyle(
+          color: isSelected ? Colors.white : Colors.black,
+        ),
+      ),
+    );
+  }
+
+  void toggleSeatSelection(
+      int row, int column, List<List<bool>> selectedSeats) {
+    setState(() {
+      // Check if the total selected seats are less than 10 before toggling
+      if (getSelectedSeats().length < 10) {
+        selectedSeats[row][column] = !selectedSeats[row][column];
+
+        // Calculate total price and update the stream
+        List<String> selectedSeatNumbers = getSelectedSeats();
+        double total = calculateTotalPrice(selectedSeatNumbers);
+        totalPriceController.add(total);
+      } else {
+        // Show a message or perform any action to notify the user that the limit is reached
+        print('Maximum 10 seats can be selected.');
+      }
+    });
+  }
+
   List<String> getSelectedSeats() {
     List<String> result = [];
-    for (int i = 0; i < selectedSeats.length; i++) {
-      for (int j = 0; j < selectedSeats[i].length; j++) {
-        if (selectedSeats[i][j]) {
-          result.add('${String.fromCharCode(i + 65)}${j + 1}');
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsA, 65));
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsA1, 65));
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsB, 66));
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsB1, 66));
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsC, 69));
+    result.addAll(getSelectedSeatsFromGrid(selectedSeatsC1, 69));
+    return result;
+  }
+
+  List<String> getSelectedSeatsFromGrid(
+      List<List<bool>> grid, int startingCharCode) {
+    List<String> result = [];
+    for (int i = 0; i < grid.length; i++) {
+      for (int j = 0; j < grid[i].length; j++) {
+        if (grid[i][j]) {
+          result.add('${String.fromCharCode(i + startingCharCode)}${j + 1}');
         }
       }
     }
@@ -131,5 +343,3 @@ class _SeatselectState extends State<Seatselect> {
     return total;
   }
 }
-
-

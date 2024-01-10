@@ -1,11 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:moviemate/model/home_model.dart';
-
-
-
+import 'package:flutter/material.dart';
 
 class home_p extends StatefulWidget {
   const home_p({super.key});
@@ -14,9 +9,21 @@ class home_p extends StatefulWidget {
   State<home_p> createState() => _home_pState();
 }
 
-
 class _home_pState extends State<home_p> {
-final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
+  final List<IconData> _icons = [
+    Icons.home,
+    Icons.history_sharp,
+    Icons.settings,
+  ];
+  int current_index = 0;
+  final List<String> _name = [
+    "Home",
+    "My Matches",
+    "Winner",
+    "Wallet",
+  ];
+  int _selectedIndex = 0;
+  final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
   //image url..
   List<String> imageurl1 = [
     'https://tse4.mm.bing.net/th?id=OIP.RZ4pRFZpS54YJDZo5XM00wHaEt&pid=Api&P=0&h=180',
@@ -32,6 +39,7 @@ final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
     'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
     'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
   ];
+  List<String> imageurl3 = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,158 +47,302 @@ final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
         debugShowCheckedModeBanner: false,
         home: SafeArea(
           child: Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 2,
+                backgroundColor: Colors.white,
+                title: Text(
+                  'MOVIEMATE',
+                  style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ),
               body: SingleChildScrollView(
-                child: Column(
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: 12)),
-                    Container(
-                      height: 40,
-                      margin: EdgeInsets.symmetric(horizontal: 22),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(left: 20),
-                            // icon: Icon(Icons.search),
-                            prefixIcon: Icon(Icons.search),
-                            hintText: 'search',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )),
-                      ),
-                    ),
+                    children: [
+                      // SizedBox(height: 5),
+                      // first slide code...
+                      Container(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Trending',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
 
-                    // SizedBox(height: 5),
-                    // first slide code...
-                    Container(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Trending',
-                            style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-
-                          // SizedBox(width: 225),
-                          Spacer(),
-                          TextButton(onPressed : (){} , child: Text('see all')),
-                        ],
+                            // SizedBox(width: 225),
+                            Spacer(),
+                            TextButton(
+                                onPressed: () {}, child: Text('see all')),
+                          ],
+                        ),
                       ),
-                    ),
 //SizedBox(height: 5),
-                  StreamBuilder<QuerySnapshot>(
-                      stream: firestore,
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshots){
-                        if(snapshots.connectionState == ConnectionState.waiting){
-                          return CircularProgressIndicator();
-                        }
-                        if(snapshots.hasError)
-                          return Text('some error is occuring');
-                        return Container(
-                          height: 210,
-                          child: CarouselSlider.builder(
-                            itemCount: snapshots.data!.docs.length,
-                            options: CarouselOptions(
-                              height: 220.0, // Adjust the height as needed
-                              autoPlay: true,
-                              enlargeCenterPage: true,
+                      StreamBuilder<QuerySnapshot>(
+                          stream: firestore,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshots) {
+                            if (snapshots.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            }
+                            if (snapshots.hasError)
+                              return Text('some error is occuring');
+                            return Container(
+                              height: 210,
+                              child: CarouselSlider.builder(
+                                itemCount: snapshots.data!.docs.length,
+                                options: CarouselOptions(
+                                  height: 220.0, // Adjust the height as needed
+                                  autoPlay: true,
+                                  enlargeCenterPage: true,
+                                ),
+                                itemBuilder: (context, index, realIndex) {
+                                  return Column(
+                                    children: [
+                                      Image.network(
+                                        snapshots.data!.docs[index]
+                                            ['image_url'],
+                                        fit: BoxFit.fill,
+                                        width: 220,
+                                        height: 180,
+                                      ),
+                                      // Text(snapshots.data!.docs[index]['name'])
+                                    ],
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+
+                      // second silide ... code ...
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Comming up',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            itemBuilder: (context, index, realIndex) {
-                              return Column(
-                                children: [
-                                  Image.network(
-                                    snapshots.data!.docs[index]['image_url'],
+                            // SizedBox(width: 215),
+                            Spacer(),
+                            TextButton(onPressed: () {}, child: Text('see all'))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: imageurl2.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imageurl1[index],
+                                    width: 100,
+                                    height: 80,
                                     fit: BoxFit.fill,
-                                    width: 220,
-                                    height: 180,
                                   ),
-                                  Text(snapshots.data!.docs[index]['name'])
-                                ],
+                                ),
                               );
-                            },
-                          ),
-                        );
-                      }
+                            }),
+                      ),
 
+                      // third slide code..
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Concert',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            // SizedBox(width: 215),
+                            Spacer(),
+                            TextButton(onPressed: () {}, child: Text('see all'))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: imageurl2.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imageurl1[index],
+                                    width: 100,
+                                    height: 80,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Stand-Up Comedy',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            // SizedBox(width: 215),
+                            Spacer(),
+                            TextButton(onPressed: () {}, child: Text('see all'))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: imageurl2.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imageurl1[index],
+                                    width: 100,
+                                    height: 80,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
                   ),
-
-                    // second silide ... code ...
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: [
-                          Text('Comming up',
-                            style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          // SizedBox(width: 215),
-                          Spacer(),
-                          TextButton(onPressed : (){},child: Text('see all'))
-                        ],
-                      ),
-                    )  ,
-                    Container(
-                      height: 130,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: ListView.builder(scrollDirection: Axis.horizontal,itemCount : imageurl2.length,itemBuilder: (context ,index){
-                        return Padding(padding: EdgeInsets.all(8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              imageurl1[index],
-                              width: 100,
-                              height: 80,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        );
-                      }
-                      ),
-
-                    ),
-
-                    // third slide code..
-                    Container(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Recently played',
-                            style:
-                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          // Spacer(),
-                          // InkWell(onTap: (){},child: Text('see all')),
-                          TextButton(onPressed: (){}, child: Text("see all")),
-                          // SizedBox(width: 20,)
-                        ],
-                      ),
-                    )  ,
-                    Container(
-                      height: 130,
-                      child: ListView.builder(scrollDirection: Axis.horizontal,itemCount : imageurl2.length,itemBuilder: (context ,index){
-                        return Padding(padding: EdgeInsets.all(8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              imageurl2[index],
-                              width: 80,
-                              height: 100,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        );
-                      }
-                      ),
-                    ),
-//BottomNavigationBar(items: )
-                  ],
                 ),
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.history_sharp,
+                    ),
+                    label: 'History',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Settings',
+                  )
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: Colors.blue,
+                onTap: (int index) {
+                  switch (index) {
+                    case 0:
+                    // only scroll to top when current index is selected.
+                    // if (_selectedIndex == index) {
+                    //   _homeController.animateTo(
+                    //     0.0,
+                    //     duration: const Duration(milliseconds: 500),
+                    //     curve: Curves.easeOut,
+                    //   );
+                    // }
+                    case 1:
+                  }
+                  setState(
+                    () {
+                      _selectedIndex = index;
+                    },
+                  );
+                },
               )),
         ));
+  }
+}
+
+class CustomBottomBarItem extends StatelessWidget {
+  final IconData icon;
+  final String name;
+  final int currentIndex;
+  final int buttonIndex;
+  final VoidCallback onTap;
+
+  const CustomBottomBarItem({
+    Key? key,
+    required this.icon,
+    required this.name,
+    required this.currentIndex,
+    required this.buttonIndex,
+    required this.onTap,
+  }) : super(key: key);
+
+  get poppinsRegular => null;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isSelected = currentIndex == buttonIndex;
+
+    var AppColors;
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            color: isSelected ? Theme.of(context).colorScheme.onPrimary : null,
+            border: Border(
+                bottom: BorderSide(
+                    color:
+                        isSelected ? AppColors.buttonColor : Colors.transparent,
+                    width: 3))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: AppColors.buttonColor,
+            ),
+            SizedBox(
+              height: 7,
+            ),
+            Text(
+              name,
+              style: poppinsRegular.copyWith(
+                fontWeight: FontWeight.w400,
+                color: AppColors.blackTextColor,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

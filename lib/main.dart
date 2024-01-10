@@ -13,10 +13,9 @@ import 'package:moviemate/pages/discription.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/theater.dart';
 
-
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -31,5 +30,3 @@ class MyApp extends StatelessWidget {
   );
   }
 }
-
-

@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1048352358697:android:8283e67a33840a7f37b738",
+        "android_client_info": {
+          "package_name": "com.example.adminmovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048352358697-eikh9tn91inoflda6tqtbt2dptaghm7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGMPXWQggB2kyZVCF3F6aTH-DQGLC91lQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048352358697-eikh9tn91inoflda6tqtbt2dptaghm7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1048352358697:android:41da5eb6dd50164837b738",
         "android_client_info": {
           "package_name": "com.example.moviemate"
