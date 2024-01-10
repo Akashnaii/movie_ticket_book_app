@@ -23,17 +23,17 @@ class _registration_pState extends State<registration_p> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               height: 200,
               width: MediaQuery.of(context).size.width,
               //color: Colors.amberAccent,
-              child: Center(
+              child: const Center(
                   child: Text(
                 " Registration page ",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               )),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
@@ -48,7 +48,7 @@ class _registration_pState extends State<registration_p> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
@@ -66,7 +66,7 @@ class _registration_pState extends State<registration_p> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
@@ -81,7 +81,7 @@ class _registration_pState extends State<registration_p> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
@@ -96,9 +96,9 @@ class _registration_pState extends State<registration_p> {
                 ),
               ),
             ),
-            SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0),
               child: Text(
                 'Select your Gender',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
@@ -108,7 +108,7 @@ class _registration_pState extends State<registration_p> {
               children: [
                 Expanded(
                   child: RadioListTile(
-                    title: Text('Male'),
+                    title: const Text('Male'),
                     value: 'Male',
                     groupValue: _selectedGender,
                     onChanged: (value) {
@@ -120,7 +120,7 @@ class _registration_pState extends State<registration_p> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                    title: Text('Female'),
+                    title: const Text('Female'),
                     value: 'Female',
                     groupValue: _selectedGender,
                     onChanged: (value) {
@@ -132,7 +132,7 @@ class _registration_pState extends State<registration_p> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(
               child: ElevatedButton(
                   onPressed: () {},
@@ -147,10 +147,10 @@ class _registration_pState extends State<registration_p> {
                       borderRadius:
                           BorderRadius.circular(15), // Rounded corners
                     ),
-                    minimumSize: Size(50, 50),
+                    minimumSize: const Size(50, 50),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 60, right: 60),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 60, right: 60),
                     child: Text('Sign Up', style: TextStyle(fontSize: 19),),
                   )),
             )

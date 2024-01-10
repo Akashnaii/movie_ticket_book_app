@@ -5,6 +5,7 @@ import 'package:moviemate/category/tranding.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:moviemate/pages/naviagation_bar.dart';
+import 'package:moviemate/pages/ratinf-set.dart';
 import 'package:moviemate/pages/registration.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/home_p.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
   return MaterialApp(
-    home:  registration_p(),
+    home:  rating(),
   );
   }
 }
