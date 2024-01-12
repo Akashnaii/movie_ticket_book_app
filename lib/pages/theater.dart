@@ -21,15 +21,15 @@ class _TheaterState extends State<Theater> {
       body: SafeArea(
         child: Column(
           children: [
-<<<<<<< HEAD
+
             const Padding(padding: EdgeInsets.only(bottom: 10)),
-=======
+
             Container(
                 height: 120,
                 width: double.infinity,
                 child: EasyInfiniteDateTimeLineExample()),
             Padding(padding: EdgeInsets.only(bottom: 10)),
->>>>>>> aayush
+
             StreamBuilder<QuerySnapshot>(
               stream: firestore,
               builder: (BuildContext context,
@@ -75,16 +75,12 @@ class _TheaterState extends State<Theater> {
                                                 topRight: Radius.circular(20)),
                                           ),
                                           context: context,
-<<<<<<< HEAD
-                                          builder: (context) => SingleChildScrollView(
-                                            child: Container(
-                                                  padding: const EdgeInsets.all(20),
-=======
+
                                           builder: (context) =>
                                               SingleChildScrollView(
                                                 child: Container(
                                                   padding: EdgeInsets.all(20),
->>>>>>> aayush
+
                                                   height: 220,
                                                   width: 200,
                                                   child: Column(
@@ -122,12 +118,12 @@ class _TheaterState extends State<Theater> {
                                                           ),
                                                         ],
                                                       ),
-<<<<<<< HEAD
+
 
                                                       const SizedBox(height: 15),
-=======
+
                                                       SizedBox(height: 15),
->>>>>>> aayush
+
                                                       Row(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -177,13 +173,7 @@ class _TheaterState extends State<Theater> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-<<<<<<< HEAD
                                           MaterialPageRoute(builder: (context) => const Seatselect()),
-=======
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Seatselect()),
->>>>>>> aayush
                                         );
                                       },
                                       child: Container(
