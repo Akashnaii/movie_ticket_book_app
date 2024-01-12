@@ -20,16 +20,16 @@ class _TheaterState extends State<Theater> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.only(bottom: 10)),
+            const Padding(padding: EdgeInsets.only(bottom: 10)),
             StreamBuilder<QuerySnapshot>(
               stream: firestore,
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshots) {
                 if (snapshots.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (snapshots.hasError) {
-                  return Text('Some error is occurring');
+                  return const Text('Some error is occurring');
                 }
                 return Expanded(
                   child: ListView.builder(
@@ -38,11 +38,11 @@ class _TheaterState extends State<Theater> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFFFFFFFF),
+                            color: const Color(0xFFFFFFFF),
                           ),
                           child: Column(
                             children: [
@@ -53,14 +53,14 @@ class _TheaterState extends State<Theater> {
                                           0.6,
                                       child: Text(
                                         snapshots.data!.docs[index]['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       )),
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20)),
@@ -68,7 +68,7 @@ class _TheaterState extends State<Theater> {
                                           context: context,
                                           builder: (context) => SingleChildScrollView(
                                             child: Container(
-                                                  padding: EdgeInsets.all(20),
+                                                  padding: const EdgeInsets.all(20),
                                                   height: 220,
                                                   width: 200,
                                                   child: Column(
@@ -78,7 +78,7 @@ class _TheaterState extends State<Theater> {
                                                       Row(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             'Name : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
@@ -89,7 +89,7 @@ class _TheaterState extends State<Theater> {
                                                             width: MediaQuery.of(context).size.width*0.7,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['name']}',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
                                                                   FontWeight.w300),
@@ -98,11 +98,11 @@ class _TheaterState extends State<Theater> {
                                                         ],
                                                       ),
 
-                                                      SizedBox(height: 15),
+                                                      const SizedBox(height: 15),
                                                       Row(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             'Address : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
@@ -113,7 +113,7 @@ class _TheaterState extends State<Theater> {
                                                             width: MediaQuery.of(context).size.width*0.6,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['address']}',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
                                                                   FontWeight.w300),
@@ -126,7 +126,7 @@ class _TheaterState extends State<Theater> {
                                                 ),
                                           ));
                                     },
-                                    icon: Icon(Icons.location_on),
+                                    icon: const Icon(Icons.location_on),
                                   ),
                                 ],
                               ),
@@ -140,7 +140,7 @@ class _TheaterState extends State<Theater> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => Seatselect()),
+                                          MaterialPageRoute(builder: (context) => const Seatselect()),
                                         );
                                       },
                                       child: Container(
@@ -152,7 +152,7 @@ class _TheaterState extends State<Theater> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             '10:00 am',
                                             style: TextStyle(

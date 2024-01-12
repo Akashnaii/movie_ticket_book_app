@@ -51,7 +51,7 @@ class _home_pState extends State<home_p> {
                 centerTitle: true,
                 elevation: 2,
                 backgroundColor: Colors.white,
-                title: Text(
+                title: const Text(
                   'MOVIEMATE',
                   style: TextStyle(
                       fontSize: 23,
@@ -69,20 +69,20 @@ class _home_pState extends State<home_p> {
                       // SizedBox(height: 5),
                       // first slide code...
                       Container(
-                        padding: EdgeInsets.only(left: 8),
+                        padding: const EdgeInsets.only(left: 8),
                         child: Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Trending',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
 
                             // SizedBox(width: 225),
-                            Spacer(),
+                            const Spacer(),
                             TextButton(
-                                onPressed: () {}, child: Text('see all')),
+                                onPressed: () {}, child: const Text('see all')),
                           ],
                         ),
                       ),
@@ -93,10 +93,10 @@ class _home_pState extends State<home_p> {
                               AsyncSnapshot<QuerySnapshot> snapshots) {
                             if (snapshots.connectionState ==
                                 ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return const CircularProgressIndicator();
                             }
                             if (snapshots.hasError)
-                              return Text('some error is occuring');
+                              return const Text('some error is occuring');
                             return Container(
                               height: 210,
                               child: CarouselSlider.builder(
@@ -126,17 +126,17 @@ class _home_pState extends State<home_p> {
 
                       // second silide ... code ...
                       Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Comming up',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             // SizedBox(width: 215),
-                            Spacer(),
-                            TextButton(onPressed: () {}, child: Text('see all'))
+                            const Spacer(),
+                            TextButton(onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -150,7 +150,7 @@ class _home_pState extends State<home_p> {
                             itemCount: imageurl2.length,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
@@ -166,17 +166,17 @@ class _home_pState extends State<home_p> {
 
                       // third slide code..
                       Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Concert',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             // SizedBox(width: 215),
-                            Spacer(),
-                            TextButton(onPressed: () {}, child: Text('see all'))
+                            const Spacer(),
+                            TextButton(onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -190,7 +190,7 @@ class _home_pState extends State<home_p> {
                             itemCount: imageurl2.length,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
@@ -205,17 +205,17 @@ class _home_pState extends State<home_p> {
                       ),
 
                       Container(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
-                            Text(
+                            const Text(
                               'Stand-Up Comedy',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             // SizedBox(width: 215),
-                            Spacer(),
-                            TextButton(onPressed: () {}, child: Text('see all'))
+                            const Spacer(),
+                            TextButton(onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -229,7 +229,7 @@ class _home_pState extends State<home_p> {
                             itemCount: imageurl2.length,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
@@ -329,7 +329,7 @@ class CustomBottomBarItem extends StatelessWidget {
               icon,
               color: AppColors.buttonColor,
             ),
-            SizedBox(
+            const SizedBox(
               height: 7,
             ),
             Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Disc extends StatefulWidget {
   const Disc({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _DiscState extends State<Disc> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _ratingController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -35,7 +37,7 @@ class _DiscState extends State<Disc> {
             ),
             const SizedBox(height: 10),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 06),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('the animal movie',
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w400)),
             ),
@@ -55,8 +57,32 @@ class _DiscState extends State<Disc> {
             ),
 
             const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 30.0,
+                itemBuilder: (context, index) {
+                  return Icon(
+                    Icons.star,
+                    color: _ratingBarController.rating >= index + 1
+                        ? Colors.amber
+                        : Colors.grey[300],
+                  );
+                },
+                onRatingUpdate: (rating) {
+                  _ratingBarController.rating = rating;
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 06),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('Cast',
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w400)),
             ),
@@ -87,11 +113,11 @@ class _DiscState extends State<Disc> {
                   // Handle button press
                 },
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Text('Book Ticket',style: TextStyle(fontSize:16 ),),
+                  padding: EdgeInsets.symmetric(horizontal: 60),
+                  child: Text('Book Ticket',style: TextStyle(fontSize:20),),
                 ),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 16), // Adjust the padding as needed
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12), // Adjust the padding as needed
                 ),
               ),
             ),
@@ -102,3 +128,9 @@ class _DiscState extends State<Disc> {
     );
   }
 }
+
+class RatingBarController {
+  double rating = 3.0;
+}
+RatingBarController _ratingBarController = RatingBarController();
+
