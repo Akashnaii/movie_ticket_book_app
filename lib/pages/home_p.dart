@@ -124,13 +124,13 @@ class _home_pState extends State<home_p> {
                             );
                           }),
 
-                      // second silide ... code ...
+                      // second slide ... code ...
                       Container(
                         padding: const EdgeInsets.only(left: 10),
                         child: Row(
                           children: [
                             const Text(
-                              'Comming up',
+                              'Coming up',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
