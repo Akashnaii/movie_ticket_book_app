@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/raw.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
@@ -20,6 +21,10 @@ class _TheaterState extends State<Theater> {
       body: SafeArea(
         child: Column(
           children: [
+            Container(
+                height: 120,
+                width: double.infinity,
+                child: EasyInfiniteDateTimeLineExample()),
             Padding(padding: EdgeInsets.only(bottom: 10)),
             StreamBuilder<QuerySnapshot>(
               stream: firestore,
@@ -66,57 +71,74 @@ class _TheaterState extends State<Theater> {
                                                 topRight: Radius.circular(20)),
                                           ),
                                           context: context,
-                                          builder: (context) => SingleChildScrollView(
-                                            child: Container(
+                                          builder: (context) =>
+                                              SingleChildScrollView(
+                                                child: Container(
                                                   padding: EdgeInsets.all(20),
                                                   height: 220,
                                                   width: 200,
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
+                                                        CrossAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                             'Name : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight.w300),
+                                                                    FontWeight
+                                                                        .w300),
                                                           ),
                                                           SizedBox(
-                                                            width: MediaQuery.of(context).size.width*0.7,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.7,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['name']}',
                                                               style: TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
-                                                                  FontWeight.w300),
+                                                                      FontWeight
+                                                                          .w300),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-
                                                       SizedBox(height: 15),
                                                       Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                             'Address : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight.w300),
+                                                                    FontWeight
+                                                                        .w300),
                                                           ),
                                                           SizedBox(
-                                                            width: MediaQuery.of(context).size.width*0.6,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.6,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['address']}',
                                                               style: TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
-                                                                  FontWeight.w300),
+                                                                      FontWeight
+                                                                          .w300),
                                                             ),
                                                           ),
                                                         ],
@@ -124,7 +146,7 @@ class _TheaterState extends State<Theater> {
                                                     ],
                                                   ),
                                                 ),
-                                          ));
+                                              ));
                                     },
                                     icon: Icon(Icons.location_on),
                                   ),
@@ -140,7 +162,9 @@ class _TheaterState extends State<Theater> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => Seatselect()),
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Seatselect()),
                                         );
                                       },
                                       child: Container(
