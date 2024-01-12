@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/raw.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
@@ -20,7 +21,15 @@ class _TheaterState extends State<Theater> {
       body: SafeArea(
         child: Column(
           children: [
+<<<<<<< HEAD
             const Padding(padding: EdgeInsets.only(bottom: 10)),
+=======
+            Container(
+                height: 120,
+                width: double.infinity,
+                child: EasyInfiniteDateTimeLineExample()),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
+>>>>>>> aayush
             StreamBuilder<QuerySnapshot>(
               stream: firestore,
               builder: (BuildContext context,
@@ -66,57 +75,85 @@ class _TheaterState extends State<Theater> {
                                                 topRight: Radius.circular(20)),
                                           ),
                                           context: context,
+<<<<<<< HEAD
                                           builder: (context) => SingleChildScrollView(
                                             child: Container(
                                                   padding: const EdgeInsets.all(20),
+=======
+                                          builder: (context) =>
+                                              SingleChildScrollView(
+                                                child: Container(
+                                                  padding: EdgeInsets.all(20),
+>>>>>>> aayush
                                                   height: 220,
                                                   width: 200,
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
+                                                        CrossAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           const Text(
                                                             'Name : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight.w300),
+                                                                    FontWeight
+                                                                        .w300),
                                                           ),
                                                           SizedBox(
-                                                            width: MediaQuery.of(context).size.width*0.7,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.7,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['name']}',
                                                               style: const TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
-                                                                  FontWeight.w300),
+                                                                      FontWeight
+                                                                          .w300),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
+<<<<<<< HEAD
 
                                                       const SizedBox(height: 15),
+=======
+                                                      SizedBox(height: 15),
+>>>>>>> aayush
                                                       Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           const Text(
                                                             'Address : ',
                                                             style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight.w300),
+                                                                    FontWeight
+                                                                        .w300),
                                                           ),
                                                           SizedBox(
-                                                            width: MediaQuery.of(context).size.width*0.6,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.6,
                                                             child: Text(
                                                               '${snapshots.data!.docs[index]['address']}',
                                                               style: const TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
-                                                                  FontWeight.w300),
+                                                                      FontWeight
+                                                                          .w300),
                                                             ),
                                                           ),
                                                         ],
@@ -124,7 +161,7 @@ class _TheaterState extends State<Theater> {
                                                     ],
                                                   ),
                                                 ),
-                                          ));
+                                              ));
                                     },
                                     icon: const Icon(Icons.location_on),
                                   ),
@@ -140,7 +177,13 @@ class _TheaterState extends State<Theater> {
                                       onTap: () {
                                         Navigator.push(
                                           context,
+<<<<<<< HEAD
                                           MaterialPageRoute(builder: (context) => const Seatselect()),
+=======
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Seatselect()),
+>>>>>>> aayush
                                         );
                                       },
                                       child: Container(
