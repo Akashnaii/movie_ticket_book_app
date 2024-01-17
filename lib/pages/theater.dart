@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/raw.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
@@ -21,13 +20,8 @@ class _TheaterState extends State<Theater> {
       body: SafeArea(
         child: Column(
           children: [
-
             const Padding(padding: EdgeInsets.only(bottom: 10)),
-
-            Container(
-                height: 120,
-                width: double.infinity,
-                child: EasyInfiniteDateTimeLineExample()),
+           // EasyInfiniteDateTimeLineExample(),
             Padding(padding: EdgeInsets.only(bottom: 10)),
 
             StreamBuilder<QuerySnapshot>(
