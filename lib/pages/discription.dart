@@ -130,7 +130,7 @@ class _DiscState extends State<Disc> {
 }
 
 class RatingBarController {
-  double rating = 3.0;
+  double rating = 4.0;
 }
 RatingBarController _ratingBarController = RatingBarController();
 
