@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/discription.dart';
-import 'package:moviemate/pages/theater.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-  return MaterialApp(
-    home:  Disc(),
-  );
-
+    return MaterialApp(
+      home: home_p(),
+    );
   }
 }
