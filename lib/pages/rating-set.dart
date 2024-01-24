@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
-
 class rating extends StatelessWidget {
   final TextEditingController _ratingController = TextEditingController();
 

@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/theater.dart';
 
 void main() async {
