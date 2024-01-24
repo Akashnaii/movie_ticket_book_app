@@ -12,25 +12,26 @@ class phonenoscreen extends StatefulWidget {
 
 class _phonenoscreenState extends State<phonenoscreen> {
   TextEditingController phonecontroller = TextEditingController();
+  bool loading = false;
   String verificationId = "";
   var phone = '';
+  String errorText = '';
 
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      // margin and padding maate..container usee..
       body: Container(
-        margin: EdgeInsets.only(left: 15, right: 15, bottom:25),
+        margin: EdgeInsets.only(left: 15, right: 15, bottom: 25),
         alignment: Alignment.center,
-        // jyare biju device  ne pn scorring maa problem naa pde teni maatenu widget...
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipOval(
-                child: Image.asset("assets/Movie-Ticket-Booking.png",
-                height: 150,
-                //   fit: BoxFit.cover,
+                child: Image.asset(
+                  "assets/Movie-Ticket-Booking.png",
+                  height: 150,
+                  //   fit: BoxFit.cover,
                 ),
               ),
               SizedBox(
@@ -55,7 +56,7 @@ class _phonenoscreenState extends State<phonenoscreen> {
                 child: TextField(
                   controller: phonecontroller,
                   onChanged: (value) {
-                    value = phone;
+                    phone = value;
                   },
                   keyboardType: TextInputType.phone,
                   // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -64,29 +65,87 @@ class _phonenoscreenState extends State<phonenoscreen> {
                       hintText: 'Enter phone number',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.call)),
+
+
                 ),
               ),
               SizedBox(
-                height: 10,
+                width: 300,
+                child: errorText.isNotEmpty
+                    ? Center(
+                      child: Padding(
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                  child: Text(
+                      errorText,
+                      style: TextStyle(color: Colors.red),
+                  ),
+                ),
+                    )
+                    : Container(),
               ),
+        SizedBox(
+            height: 10,
+          ),
               SizedBox(
                 height: 45,
                 width: 275,
                 child: ElevatedButton(
                   onPressed: () async {
-                    //    send otp code
-                    await FirebaseAuth.instance.verifyPhoneNumber(
-                      phoneNumber: '+91${phonecontroller.text}',
-                      verificationCompleted:
-                          (PhoneAuthCredential credential) {},
-                      verificationFailed: (FirebaseAuthException e) {},
-                      codeSent: (String verificationId, int? resendToken) {},
-                      codeAutoRetrievalTimeout: (String verificationId) {},
-                    );
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => OtpGet()));
-                    print("otp sent to $phonecontroller");
+                    if (phone.length != 10) {
+                      setState(() {
+                        errorText = 'Please enter a 10-digit phone number';
+                      });
+                    } else {
+                      try {
+                        setState(() {
+                          loading = true;
+                          errorText = '';
+                        });
+
+                        await FirebaseAuth.instance.verifyPhoneNumber(
+                          phoneNumber: '+91${phonecontroller.text}',
+                          verificationCompleted: (PhoneAuthCredential credential) {
+                            setState(() {
+                              loading = false;
+                            });
+                          },
+                          verificationFailed: (FirebaseAuthException e) {
+                            setState(() {
+                              loading = false;
+                            });
+                            print('Verification Failed: $e');
+                          },
+                          codeSent: (String verificationId, int? resendToken) {
+                            setState(() {
+                              loading = false;
+                              this.verificationId = verificationId;
+                            });
+
+                            // Navigate to the OTP screen only once
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OtpGet(
+                                  verificationId: verificationId,
+                                ),
+                              ),
+                            );
+                          },
+                          codeAutoRetrievalTimeout: (String verificationId) {
+                            setState(() {
+                              loading = false;
+                            });
+                          },
+                        );
+                      } catch (e) {
+                        setState(() {
+                          loading = false;
+                        });
+                        print('Error sending OTP: $e');
+                      }
+                    }
                   },
+
                   style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                       backgroundColor: MaterialStateProperty.all(Colors.black),
@@ -95,7 +154,11 @@ class _phonenoscreenState extends State<phonenoscreen> {
                               borderRadius: BorderRadius.circular(15)))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Icon(Icons.confirmation_num),SizedBox(width: 10), Text("Send the OTP")],
+                    children: [
+                      Icon(Icons.confirmation_num),
+                      SizedBox(width: 10),
+                      Text("Send the OTP")
+                    ],
                   ),
                 ),
               ),
