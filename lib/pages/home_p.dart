@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/routes.dart';
+import 'package:moviemate/Navigationbar/Settingscreen.dart';
 
 class home_p extends StatefulWidget {
   const home_p({super.key});
@@ -146,7 +147,8 @@ class _home_pState extends State<home_p> {
                             ),
                             // SizedBox(width: 215),
                             const Spacer(),
-                            TextButton(onPressed: () {}, child: const Text('see all'))
+                            TextButton(
+                                onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -191,7 +193,8 @@ class _home_pState extends State<home_p> {
                             ),
                             // SizedBox(width: 215),
                             const Spacer(),
-                            TextButton(onPressed: () {}, child: const Text('see all'))
+                            TextButton(
+                                onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -238,6 +241,8 @@ class _home_pState extends State<home_p> {
                             const Spacer(),
                             TextButton(onPressed: () {
                             }, child: const Text('see all'))
+                            TextButton(
+                                onPressed: () {}, child: const Text('see all'))
                           ],
                         ),
                       ),
@@ -305,12 +310,17 @@ class _home_pState extends State<home_p> {
                     //   );
                     // }
                     case 1:
+                    case 2:
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Settingpage()));
+                      setState(
+                        () {
+                          _selectedIndex = index;
+                        },
+                      );
                   }
-                  setState(
-                    () {
-                      _selectedIndex = index;
-                    },
-                  );
                 },
               )),
         ));
