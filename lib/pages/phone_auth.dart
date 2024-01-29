@@ -1,13 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviemate/pages/otp_get.dart';
+import 'package:moviemate/pages/routes.dart';
 
 class phonenoscreen extends StatefulWidget {
   const phonenoscreen({super.key});
 
   @override
   State<phonenoscreen> createState() => _phonenoscreenState();
+
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => phonenoscreen(),
+    );
+  }
 }
 
 class _phonenoscreenState extends State<phonenoscreen> {
@@ -19,6 +27,7 @@ class _phonenoscreenState extends State<phonenoscreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return (Scaffold(
       body: Container(
         margin: EdgeInsets.only(left: 15, right: 15, bottom: 25),
@@ -122,14 +131,16 @@ class _phonenoscreenState extends State<phonenoscreen> {
                             });
 
                             // Navigate to the OTP screen only once
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OtpGet(
-                                  verificationId: verificationId,
-                                ),
-                              ),
-                            );
+                            Navigator.pushNamed(context, Routes.Home_p);
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => OtpGet(
+                            //       verificationId: verificationId,
+                            //     ),
+                            //   ),
+                            // );
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {
                             setState(() {

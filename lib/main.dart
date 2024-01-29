@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/otp_get.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/theater.dart';
 
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      home: Theater(),
+      //home: phonenoscreen(),
+      //initialRoute: Routes.mainSplash,
+      onGenerateRoute: Routes.onGenerateRoute,
     );
   }
 }

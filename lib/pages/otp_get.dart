@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/home_p.dart';
+import 'package:moviemate/pages/routes.dart';
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:moviemate/pages/naviagation_bar.dart';
@@ -11,9 +13,15 @@ class OtpGet extends StatefulWidget {
 
   @override
   State<OtpGet> createState() => _OtpGetState();
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => OtpGet(verificationId: '',),
+    );
+  }
 }
 
 class _OtpGetState extends State<OtpGet> {
+
   TextEditingController otpController = TextEditingController();
   bool loading = false;
   String correctOTP = '';
@@ -35,19 +43,20 @@ class _OtpGetState extends State<OtpGet> {
           loading = false;
         });
         // The OTP is valid, navigate to the main app screen or perform further actions
-        Navigator.push(context, MaterialPageRoute(builder: (context) => home_p()));
+        Navigator.pushNamed(context, Routes.Home_p);
       } else {
         // The OTP is invalid
         setState(() {
           loading = false;
+          Text(" incorrect pin ", style: TextStyle(color: Colors.red),);
         });
-        // Text(" incorrect pin ", style: TextStyle(color: Colors.red),);
+
       }
     } catch (e) {
       setState(() {
          loading = false;
       });
-      Text(" incorrect pin ", style: TextStyle(color: Colors.red),);
+
     }
   }
 
@@ -122,10 +131,7 @@ class _OtpGetState extends State<OtpGet> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => phonenoscreen()));
+                   Navigator.pushNamed(context, Routes.phoneScreen);
                   },
                   child: Text(
                     'Edit Phone Number ?',

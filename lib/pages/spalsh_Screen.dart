@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,11 +11,17 @@ class SplashScreen extends StatefulWidget {
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => const SplashScreen(),
+    );
+  }
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
+
 
   @override
   void initState() {
@@ -27,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // Set up a timer to navigate to the next screen after 2 seconds (adjust the duration as needed)
     Timer(Duration(seconds: 4), () {
       // Replace 'NextScreen()' with the screen you want to navigate to
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => phonenoscreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => home_p()));
     });
   }
 

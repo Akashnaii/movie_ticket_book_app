@@ -1,15 +1,23 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/routes.dart';
 
 class home_p extends StatefulWidget {
   const home_p({super.key});
 
   @override
   State<home_p> createState() => _home_pState();
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => home_p(),
+    );
+  }
 }
 
 class _home_pState extends State<home_p> {
+
   final List<IconData> _icons = [
     Icons.home,
     Icons.history_sharp,
@@ -82,7 +90,9 @@ class _home_pState extends State<home_p> {
                             // SizedBox(width: 225),
                             const Spacer(),
                             TextButton(
-                                onPressed: () {}, child: const Text('see all')),
+                                onPressed: () {
+                                 // Navigator.pushNamed(context, Routes.Disc());
+                                }, child: const Text('see all')),
                           ],
                         ),
                       ),
@@ -93,7 +103,7 @@ class _home_pState extends State<home_p> {
                               AsyncSnapshot<QuerySnapshot> snapshots) {
                             if (snapshots.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return Center(child: const CircularProgressIndicator());
                             }
                             if (snapshots.hasError)
                               return const Text('some error is occuring');
@@ -145,23 +155,28 @@ class _home_pState extends State<home_p> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: imageurl2.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    imageurl1[index],
-                                    width: 100,
-                                    height: 80,
-                                    fit: BoxFit.fill,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(context, Routes.discription);
+                          },
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: imageurl2.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      imageurl1[index],
+                                      width: 100,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
+                                );
+                              }),
+                        ),
                       ),
 
                       // third slide code..
@@ -180,28 +195,34 @@ class _home_pState extends State<home_p> {
                           ],
                         ),
                       ),
-                      Container(
-                        height: 130,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: imageurl2.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    imageurl1[index],
-                                    width: 100,
-                                    height: 80,
-                                    fit: BoxFit.fill,
+                      InkWell(
+                        onTap: ()
+                        {
+                          Navigator.pushNamed(context, Routes.discription);
+                        },
+                        child: Container(
+                          height: 130,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: imageurl2.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      imageurl1[index],
+                                      width: 100,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
+                                );
+                              }),
+                        ),
                       ),
 
                       Container(
@@ -215,32 +236,39 @@ class _home_pState extends State<home_p> {
                             ),
                             // SizedBox(width: 215),
                             const Spacer(),
-                            TextButton(onPressed: () {}, child: const Text('see all'))
+                            TextButton(onPressed: () {
+                            }, child: const Text('see all'))
                           ],
                         ),
                       ),
-                      Container(
-                        height: 130,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: imageurl2.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    imageurl1[index],
-                                    width: 100,
-                                    height: 80,
-                                    fit: BoxFit.fill,
+                      InkWell(
+                        onTap: ()
+                        {
+                          Navigator.pushNamed(context, Routes.discription);
+                        },
+                        child: Container(
+                          height: 130,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: imageurl2.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      imageurl1[index],
+                                      width: 100,
+                                      height: 80,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
+                                );
+                              }),
+                        ),
                       ),
                     ],
                   ),

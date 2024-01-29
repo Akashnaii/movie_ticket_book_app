@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
@@ -7,6 +9,11 @@ class Theater extends StatefulWidget {
 
   @override
   State<Theater> createState() => _TheaterState();
+  static Route<dynamic> route(RouteSettings routeSettings){
+    return CupertinoPageRoute(
+      builder: (_) => Theater(),
+    );
+  }
 }
 
 class _TheaterState extends State<Theater> {
@@ -21,7 +28,6 @@ class _TheaterState extends State<Theater> {
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.only(bottom: 10)),
-           // EasyInfiniteDateTimeLineExample(),
             Padding(padding: EdgeInsets.only(bottom: 10)),
 
             StreamBuilder<QuerySnapshot>(
@@ -164,11 +170,8 @@ class _TheaterState extends State<Theater> {
                                   (index) => Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => const Seatselect()),
-                                        );
+                                       onTap: () {
+                                         Navigator.pushNamed(context, Routes.seat_select);
                                       },
                                       child: Container(
                                         height: 30,

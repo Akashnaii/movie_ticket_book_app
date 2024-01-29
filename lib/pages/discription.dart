@@ -1,11 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:moviemate/pages/routes.dart';
 
 class Disc extends StatefulWidget {
   const Disc({Key? key}) : super(key: key);
 
   @override
   State<Disc> createState() => _DiscState();
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => Disc(),
+    );
+  }
 }
 
 class _DiscState extends State<Disc> {
@@ -111,6 +118,7 @@ class _DiscState extends State<Disc> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button press
+                  Navigator.pushNamed(context, Routes.theater);
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 60),

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moviemate/pages/routes.dart';
 
 
 class TransectionSuccessfull extends StatefulWidget {
@@ -8,6 +10,12 @@ class TransectionSuccessfull extends StatefulWidget {
 
   @override
   State<TransectionSuccessfull> createState() => _TransectionSuccessfullState();
+
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => TransectionSuccessfull(),
+    );
+  }
 }
 
 class _TransectionSuccessfullState extends State<TransectionSuccessfull> {
@@ -33,7 +41,7 @@ class _TransectionSuccessfullState extends State<TransectionSuccessfull> {
            ),
             const SizedBox(height: 310),
             ElevatedButton(onPressed: (){
-
+Navigator.pushNamed(context, Routes.Home_p);
             },
               style: ButtonStyle(
                 fixedSize:MaterialStateProperty.all<Size>(
