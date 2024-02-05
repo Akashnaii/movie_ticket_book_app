@@ -40,7 +40,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.9
-  google_fonts: ^6.1.0
+  flutterflow_ui: ^0.2.0+1
   datetime_picker_formfield_new: ^2.1.0
   easy_date_timeline: ^1.0.2
 

@@ -2,23 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moviemate/pages/routes.dart';
 
 
-class TransectionSuccessfull extends StatefulWidget {
-  const TransectionSuccessfull({super.key});
+
+class TransactionSuccessful extends StatefulWidget {
+  const TransactionSuccessful({super.key});
 
   @override
-  State<TransectionSuccessfull> createState() => _TransectionSuccessfullState();
+  State<TransactionSuccessful> createState() => _TransactionSuccessfulState();
 
   static Route<dynamic> route(RouteSettings routeSettings) {
     return CupertinoPageRoute(
-      builder: (_) => TransectionSuccessfull(),
+      builder: (_) => TransactionSuccessful(),
     );
   }
 }
 
-class _TransectionSuccessfullState extends State<TransectionSuccessfull> {
+class _TransactionSuccessfulState extends State<TransactionSuccessful> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +41,7 @@ class _TransectionSuccessfullState extends State<TransectionSuccessfull> {
            ),
             const SizedBox(height: 310),
             ElevatedButton(onPressed: (){
-Navigator.pushNamed(context, Routes.Home_p);
+// Navigator.pushNamed(context, Routes.Home_p);
             },
               style: ButtonStyle(
                 fixedSize:MaterialStateProperty.all<Size>(

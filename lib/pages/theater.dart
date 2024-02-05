@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
@@ -171,7 +170,7 @@ class _TheaterState extends State<Theater> {
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
                                        onTap: () {
-                                         Navigator.pushNamed(context, Routes.seat_select);
+                                         // Navigator.pushNamed(context, Routes.seat_select);
                                       },
                                       child: Container(
                                         height: 30,

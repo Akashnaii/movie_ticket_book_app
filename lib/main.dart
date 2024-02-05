@@ -1,11 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/home_p.dart';
-import 'package:moviemate/pages/otp_get.dart';
-import 'package:moviemate/pages/phone_auth.dart';
-import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
-import 'package:moviemate/pages/theater.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      //home: phonenoscreen(),
-      //initialRoute: Routes.mainSplash,
-      onGenerateRoute: Routes.onGenerateRoute,
+    return  MaterialApp(
+      home: SplashScreen(),
     );
   }
 }

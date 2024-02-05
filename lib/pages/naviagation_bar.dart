@@ -27,7 +27,7 @@ class _navState extends State<nav> {
         body: PageView(
           controller: pageController,
           children: [
-            home_p(),
+            HomeP(),
 
           ],
         ),

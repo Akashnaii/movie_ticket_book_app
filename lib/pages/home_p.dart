@@ -2,385 +2,352 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/Navigationbar/Settingscreen.dart';
+import 'package:moviemate/pages/booking_history.dart';
+import 'package:moviemate/pages/discription.dart';
 
-class home_p extends StatefulWidget {
-  const home_p({super.key});
+
+class HomeP extends StatefulWidget {
+  const HomeP({Key? key});
 
   @override
-  State<home_p> createState() => _home_pState();
-  static Route<dynamic> route(RouteSettings routeSettings) {
-    return CupertinoPageRoute(
-      builder: (_) => home_p(),
-    );
-  }
+  State<HomeP> createState() => _HomePState();
 }
 
-class _home_pState extends State<home_p> {
-
-  final List<IconData> _icons = [
-    Icons.home,
-    Icons.history_sharp,
-    Icons.settings,
-  ];
-  int current_index = 0;
-  final List<String> _name = [
-    "Home",
-    "My Matches",
-    "Winner",
-    "Wallet",
-  ];
+class _HomePState extends State<HomeP> {
   int _selectedIndex = 0;
   final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
-  //image url..
-  List<String> imageurl1 = [
-    'https://tse4.mm.bing.net/th?id=OIP.RZ4pRFZpS54YJDZo5XM00wHaEt&pid=Api&P=0&h=180',
-    'https://mir-s3-cdn-cf.behance.net/project_modules/1400/62332132039857.566bcebd67c82.jpg',
-    'https://i.pinimg.com/originals/6c/2f/de/6c2fde0235ece77e4fc91f8ebe8d8739.jpg',
-    'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
-    'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
-  ];
-  List<String> imageurl2 = [
-    'https://tse2.mm.bing.net/th?id=OIP.gF--XR-CwFzNmC-zfsJD1QHaKu&pid=Api&P=0&h=180',
-    'https://mir-s3-cdn-cf.behance.net/project_modules/1400/62332132039857.566bcebd67c82.jpg',
-    'https://i.pinimg.com/originals/6c/2f/de/6c2fde0235ece77e4fc91f8ebe8d8739.jpg',
-    'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
-    'https://tse4.mm.bing.net/th?id=OIP.nyFLBYjD207JNHC4hBQBAwHaE8&pid=Api&P=0&h=180',
-  ];
-  List<String> imageurl3 = [];
+  final concert = FirebaseFirestore.instance.collection('Concert').snapshots();
+  final standupcomedy = FirebaseFirestore.instance.collection('Standup commedy').snapshots();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SafeArea(
-          child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                elevation: 2,
-                backgroundColor: Colors.white,
-                title: const Text(
-                  'MOVIEMATE',
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            elevation: 2,
+            backgroundColor: Colors.white,
+            title: const Text(
+              'MOVIEMATE',
+              style: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // SizedBox(height: 5),
-                      // first slide code...
-                      Container(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Trending',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-
-                            // SizedBox(width: 225),
-                            const Spacer(),
-                            TextButton(
-                                onPressed: () {
-                                 // Navigator.pushNamed(context, Routes.Disc());
-                                }, child: const Text('see all')),
-                          ],
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Row(
+                      children: [
+                         Text(
+                          'Trending',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-//SizedBox(height: 5),
-                      StreamBuilder<QuerySnapshot>(
-                          stream: firestore,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshots) {
-                            if (snapshots.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: const CircularProgressIndicator());
-                            }
-                            if (snapshots.hasError)
-                              return const Text('some error is occuring');
-                            return Container(
-                              height: 210,
-                              child: CarouselSlider.builder(
-                                itemCount: snapshots.data!.docs.length,
-                                options: CarouselOptions(
-                                  height: 220.0, // Adjust the height as needed
-                                  autoPlay: true,
-                                  enlargeCenterPage: true,
+
+                      ],
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: firestore,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshots) {
+                      if (snapshots.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child:  Center(child: CircularProgressIndicator()),
+                        );
+                      }
+                      if (snapshots.hasError)
+                        return const Text('some error is occuring');
+                      return Container(
+                        height: 210,
+                        child: CarouselSlider.builder(
+                          itemCount: snapshots.data!.docs.length,
+                          options: CarouselOptions(
+                            height: 220.0,
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                          ),
+                          itemBuilder: (context, index, realIndex) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
+                                  },
+                                  child: Image.network(
+                                    snapshots.data!.docs[index]['image_url'],
+                                    fit: BoxFit.fill,
+                                    width: 220,
+                                    height: 180,
+                                  ),
                                 ),
-                                itemBuilder: (context, index, realIndex) {
-                                  return Column(
-                                    children: [
-                                      Image.network(
-                                        snapshots.data!.docs[index]
-                                            ['image_url'],
-                                        fit: BoxFit.fill,
-                                        width: 220,
-                                        height: 180,
-                                      ),
-                                      // Text(snapshots.data!.docs[index]['name'])
-                                    ],
-                                  );
-                                },
-                              ),
+                              ],
                             );
-                          }),
-
-                      // second slide ... code ...
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Coming up',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            // SizedBox(width: 215),
-                            const Spacer(),
-                            TextButton(
-                                onPressed: () {}, child: const Text('see all'))
-                          ],
+                          },
                         ),
-                      ),
-                      Container(
+                      );
+                    },
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Coming up',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: firestore,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshots) {
+                      if (snapshots.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: const CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshots.hasError) {
+                        return Text('Error: ${snapshots.error}');
+                      }
+                      if (snapshots.data == null &&
+                          snapshots.data!.docs.isEmpty) {
+                        return Text('No data available');
+                      }
+                      if (snapshots.data == null) {
+                        // Handle null case
+                        return Text('Data is null');
+                      }
+
+                      return Container(
                         height: 130,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.pushNamed(context, Routes.discription);
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshots.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GestureDetector(
+
+                                    onTap: () {
+                                      Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
+                                    },
+
+                                  child: Image.network(
+                                    snapshots.data!.docs[index]['image_url'],
+                                    width: 100,
+                                    height: 80,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            );
                           },
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: imageurl2.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      imageurl1[index],
-                                      width: 100,
-                                      height: 80,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                );
-                              }),
                         ),
-                      ),
-
-                      // third slide code..
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Concert',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            // SizedBox(width: 215),
-                            const Spacer(),
-                            TextButton(
-                                onPressed: () {}, child: const Text('see all'))
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: ()
-                        {
-                          Navigator.pushNamed(context, Routes.discription);
-                        },
-                        child: Container(
-                          height: 130,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: imageurl2.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      imageurl1[index],
-                                      width: 100,
-                                      height: 80,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ),
-
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Stand-Up Comedy',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            // SizedBox(width: 215),
-                            const Spacer(),
-                            TextButton(onPressed: () {
-                            }, child: const Text('see all'))
-                            TextButton(
-                                onPressed: () {}, child: const Text('see all'))
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: ()
-                        {
-                          Navigator.pushNamed(context, Routes.discription);
-                        },
-                        child: Container(
-                          height: 130,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: imageurl2.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      imageurl1[index],
-                                      width: 100,
-                                      height: 80,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              bottomNavigationBar: BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.history_sharp,
-                    ),
-                    label: 'History',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: 'Settings',
-                  )
-                ],
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.blue,
-                onTap: (int index) {
-                  switch (index) {
-                    case 0:
-                    // only scroll to top when current index is selected.
-                    // if (_selectedIndex == index) {
-                    //   _homeController.animateTo(
-                    //     0.0,
-                    //     duration: const Duration(milliseconds: 500),
-                    //     curve: Curves.easeOut,
-                    //   );
-                    // }
-                    case 1:
-                    case 2:
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Settingpage()));
-                      setState(
-                        () {
-                          _selectedIndex = index;
-                        },
                       );
-                  }
-                },
-              )),
-        ));
-  }
-}
+                    },
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Concert',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: concert,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshots) {
+                      if (snapshots.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: const CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshots.hasError) {
+                        return Text('Error: ${snapshots.error}');
+                      }
+                      if (snapshots.data == null ||
+                          snapshots.data!.docs.isEmpty) {
+                        return Text('No data available');
+                      }
+                      if (snapshots.data == null) {
+                        // Handle null case
+                        return Text('Data is null');
+                      }
 
-class CustomBottomBarItem extends StatelessWidget {
-  final IconData icon;
-  final String name;
-  final int currentIndex;
-  final int buttonIndex;
-  final VoidCallback onTap;
+                      return Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshots.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
+                                  },
+                                  child: Image.network(
+                                    snapshots.data!.docs[index]['image_url'],
+                                    width: 100,
+                                    height: 80,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Stand-Up Comedy',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: standupcomedy,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshots) {
+                      if (snapshots.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: const CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshots.hasError) {
+                        return Text('Error: ${snapshots.error}');
+                      }
+                      if (snapshots.data == null ||
+                          snapshots.data!.docs.isEmpty) {
+                        return Text('No data available');
+                      }
+                      if (snapshots.data == null) {
+                        // Handle null case
+                        return Text('Data is null');
+                      }
 
-  const CustomBottomBarItem({
-    Key? key,
-    required this.icon,
-    required this.name,
-    required this.currentIndex,
-    required this.buttonIndex,
-    required this.onTap,
-  }) : super(key: key);
-
-  get poppinsRegular => null;
-
-  @override
-  Widget build(BuildContext context) {
-    bool isSelected = currentIndex == buttonIndex;
-
-    var AppColors;
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected ? Theme.of(context).colorScheme.onPrimary : null,
-            border: Border(
-                bottom: BorderSide(
-                    color:
-                        isSelected ? AppColors.buttonColor : Colors.transparent,
-                    width: 3))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: AppColors.buttonColor,
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            Text(
-              name,
-              style: poppinsRegular.copyWith(
-                fontWeight: FontWeight.w400,
-                color: AppColors.blackTextColor,
-                fontSize: 12,
+                      return Container(
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshots.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
+                                  },
+                                  child: Image.network(
+                                    snapshots.data!.docs[index]['image_url'],
+                                    width: 100,
+                                    height: 80,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.history_sharp,
+                ),
+                label: 'History',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.blue,
+            onTap: (int index) {
+              switch (index) {
+                case 0:
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+                  break;
+
+                   case 1:
+                 Navigator.push(context, CupertinoPageRoute(builder: (context)=> BookingHistory()));
+              break;
+                case 2:
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> SettingScreen()));
+                  break;
+              }
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+          ),
         ),
       ),
     );
   }
 }
+

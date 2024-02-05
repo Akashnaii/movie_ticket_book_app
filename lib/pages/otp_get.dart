@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/home_p.dart';
-import 'package:moviemate/pages/routes.dart';
+
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:moviemate/pages/naviagation_bar.dart';
@@ -43,7 +43,7 @@ class _OtpGetState extends State<OtpGet> {
           loading = false;
         });
         // The OTP is valid, navigate to the main app screen or perform further actions
-        Navigator.pushNamed(context, Routes.Home_p);
+        // Navigator.pushNamed(context, Routes.Home_p);
       } else {
         // The OTP is invalid
         setState(() {
@@ -131,7 +131,7 @@ class _OtpGetState extends State<OtpGet> {
               ),
               TextButton(
                   onPressed: () {
-                   Navigator.pushNamed(context, Routes.phoneScreen);
+                   // Navigator.pushNamed(context, Routes.phoneScreen);
                   },
                   child: Text(
                     'Edit Phone Number ?',

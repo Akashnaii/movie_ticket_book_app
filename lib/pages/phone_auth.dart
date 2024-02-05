@@ -3,22 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviemate/pages/otp_get.dart';
-import 'package:moviemate/pages/routes.dart';
 
-class phonenoscreen extends StatefulWidget {
-  const phonenoscreen({super.key});
+
+class PhoneAuth extends StatefulWidget {
+  const PhoneAuth({super.key});
 
   @override
-  State<phonenoscreen> createState() => _phonenoscreenState();
+  State<PhoneAuth> createState() => _PhoneAuthState();
 
   static Route<dynamic> route(RouteSettings routeSettings) {
     return CupertinoPageRoute(
-      builder: (_) => phonenoscreen(),
+      builder: (_) => PhoneAuth(),
     );
   }
 }
 
-class _phonenoscreenState extends State<phonenoscreen> {
+class _PhoneAuthState extends State<PhoneAuth> {
   TextEditingController phonecontroller = TextEditingController();
   bool loading = false;
   String verificationId = "";
@@ -131,7 +131,7 @@ class _phonenoscreenState extends State<phonenoscreen> {
                             });
 
                             // Navigate to the OTP screen only once
-                            Navigator.pushNamed(context, Routes.Home_p);
+                            // Navigator.pushNamed(context, Routes.Home_p);
 
                             // Navigator.push(
                             //   context,

@@ -2,21 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/routes.dart';
 
-class Seatselect extends StatefulWidget {
-  const Seatselect({Key? key}) : super(key: key);
+
+class SeatSelection extends StatefulWidget {
+  const SeatSelection({Key? key}) : super(key: key);
 
   @override
-  State<Seatselect> createState() => _SeatselectState();
+  State<SeatSelection> createState() => _SeatSelectionState();
   static Route<dynamic> route(RouteSettings routeSettings){
     return CupertinoPageRoute(
-      builder: (_) => Seatselect(),
+      builder: (_) => SeatSelection(),
     );
   }
 }
 
-class _SeatselectState extends State<Seatselect> {
+class _SeatSelectionState extends State<SeatSelection> {
   List<List<bool>> selectedSeatsA = List.generate(
     4,
     (row) => List.generate(4, (column) => false),
@@ -136,7 +136,7 @@ class _SeatselectState extends State<Seatselect> {
                   List<String> selectedSeatNumbers = getSelectedSeats();
                   double total = calculateTotalPrice(selectedSeatNumbers);
                   totalPriceController.add(total);
-                  Navigator.pushNamed(context, Routes.creditCard);
+                  // Navigator.pushNamed(context, Routes.creditCard);
                   print('Selected Seats: $selectedSeatNumbers');
                 },
                 child: Text(

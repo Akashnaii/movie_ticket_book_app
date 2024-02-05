@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
+class PrivacyPolicy extends StatelessWidget {
+  static Route<dynamic> route(RouteSettings routeSettings) {
+    return CupertinoPageRoute(
+      builder: (_) => PrivacyPolicy(),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

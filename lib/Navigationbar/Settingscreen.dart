@@ -1,17 +1,17 @@
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 
-import '../pages/privacy_policy.dart';
-
-class Settingpage extends StatefulWidget {
-  const Settingpage({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
 
   @override
-  State<Settingpage> createState() => _SettingpageState();
+  State<SettingScreen> createState() => _SettingScreenState();
+
 }
 
-class _SettingpageState extends State<Settingpage> {
+class _SettingScreenState extends State<SettingScreen> {
   final format = DateFormat("yyyy-MM-dd");
   DateTime? selectedDate;
   bool showPersonalDetailsForm = false;
@@ -26,21 +26,30 @@ class _SettingpageState extends State<Settingpage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            elevation: 2,
+            backgroundColor: Colors.white,
+            title: const Text(
+              'Setting',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context); // Perform Navigator.pop operation
+              },
+            ),
+          ),
           body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Text("Settings",
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold)),
-            ),
-          ),
-          SizedBox(height: 50),
+SizedBox(height: 20),
           InkWell(
             onTap: () {
               setState(() {
@@ -51,14 +60,18 @@ class _SettingpageState extends State<Settingpage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.4,
+                  height: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: const Text(
+                      "Edit Profile",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 SizedBox(width: 200),
@@ -163,10 +176,8 @@ class _SettingpageState extends State<Settingpage> {
           SizedBox(height: 25),
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PrivacyPolicyScreen()));
+
+
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
