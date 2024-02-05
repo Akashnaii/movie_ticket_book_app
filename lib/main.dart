@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 
 
+import 'package:moviemate/pages/theater.dart';
+import 'package:moviemate/Terms_Condition.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -201,6 +201,7 @@ class PrivacyPolicy extends StatelessWidget {
                   '''),
             PrivacyPolicySection(title: 'Contact Us', content: '''
       If you have any questions about this Privacy Policy, You can contact us:
+      
           • By email: aayushjani175@gmail.com
                   '''),
             // Add more sections as needed
