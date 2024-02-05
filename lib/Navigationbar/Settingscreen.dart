@@ -41,6 +41,13 @@ class _SettingpageState extends State<Settingpage> {
             ),
           ),
           SizedBox(height: 50),
+          Container(
+            child: CircleAvatar(
+              backgroundImage:
+                  NetworkImage('https://example.com/your_avatar_image.jpg'),
+              radius: 40,
+            ),
+          ),
           InkWell(
             onTap: () {
               setState(() {

@@ -6,6 +6,7 @@ import 'package:moviemate/pages/phone_auth.dart';
 import 'package:moviemate/pages/routes.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/theater.dart';
+import 'package:moviemate/Terms_Condition.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //home: phonenoscreen(),
       //initialRoute: Routes.mainSplash,
-      onGenerateRoute: Routes.onGenerateRoute,
+      // onGenerateRoute: Routes.onGenerateRoute,
+      home: termsandcondition(),
     );
   }
 }
