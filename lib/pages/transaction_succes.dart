@@ -2,20 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moviemate/pages/home_p.dart';
 
 
 
 class TransactionSuccessful extends StatefulWidget {
-  const TransactionSuccessful({super.key});
+  final String? theaterName;
+  final String? showtime;
+  final List<String> selectedSeats;
+  final double totalPrice;
+  final String movieName;
+  final String imageUrl;
+  const TransactionSuccessful({super.key, this.theaterName, this.showtime, required this.selectedSeats, required this.totalPrice, required this.movieName, required this.imageUrl});
 
   @override
   State<TransactionSuccessful> createState() => _TransactionSuccessfulState();
 
-  static Route<dynamic> route(RouteSettings routeSettings) {
-    return CupertinoPageRoute(
-      builder: (_) => TransactionSuccessful(),
-    );
-  }
 }
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
@@ -42,6 +44,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
             const SizedBox(height: 310),
             ElevatedButton(onPressed: (){
 // Navigator.pushNamed(context, Routes.Home_p);
+            Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeP()));
             },
               style: ButtonStyle(
                 fixedSize:MaterialStateProperty.all<Size>(

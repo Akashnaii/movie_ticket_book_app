@@ -3,17 +3,20 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Creditcard.dart';
+
 
 class SeatSelection extends StatefulWidget {
-  const SeatSelection({Key? key}) : super(key: key);
+  final String? theaterName;
+  final String? showtime;
+  final String movieName;
+  final String imageUrl;
+  const SeatSelection({super.key, this.theaterName, this.showtime, required this.movieName, required this.imageUrl,});
+
 
   @override
   State<SeatSelection> createState() => _SeatSelectionState();
-  static Route<dynamic> route(RouteSettings routeSettings){
-    return CupertinoPageRoute(
-      builder: (_) => SeatSelection(),
-    );
-  }
+
 }
 
 class _SeatSelectionState extends State<SeatSelection> {
@@ -137,6 +140,14 @@ class _SeatSelectionState extends State<SeatSelection> {
                   double total = calculateTotalPrice(selectedSeatNumbers);
                   totalPriceController.add(total);
                   // Navigator.pushNamed(context, Routes.creditCard);
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> CreditCardScreen(
+                    theaterName: widget.theaterName,
+                    showtime: widget.showtime,
+                    selectedSeats: selectedSeatNumbers,
+                    totalPrice: total,
+                    movieName: widget.movieName,
+                    imageUrl: widget.imageUrl,
+                  )));
                   print('Selected Seats: $selectedSeatNumbers');
                 },
                 child: Text(

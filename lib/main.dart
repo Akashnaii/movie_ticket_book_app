@@ -1,10 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/Navigationbar//Terms_Condition.dart';
+import 'package:moviemate/pages/booking_history.dart';
+import 'package:moviemate/pages/phone_auth.dart';
+import 'package:moviemate/pages/registration.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
+import 'package:moviemate/pages/home_p.dart';
+
+import 'Navigationbar/Settingscreen.dart';
+import 'pages/fetchuser.dart';
 
 
-import 'package:moviemate/pages/theater.dart';
-import 'package:moviemate/Terms_Condition.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  MaterialApp(
-      home: SplashScreen(),
+      home: SettingScreen(),
     );
   }
 }

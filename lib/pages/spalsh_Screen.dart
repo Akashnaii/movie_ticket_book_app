@@ -6,20 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 
-
-
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
+bool isUserLoggedIn = false;
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-
 
   @override
   void initState() {
@@ -32,8 +29,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     // Set up a timer to navigate to the next screen after 2 seconds (adjust the duration as needed)
     Timer(Duration(seconds: 4), () {
-      // Replace 'NextScreen()' with the screen you want to navigate to
-      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+      // Check if the user is already logged in
+      // Replace this condition with your actual authentication logic
+      if (isUserLoggedIn) {
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+      } else {
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
+      }
     });
   }
 
@@ -55,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-           
           ),
           child: ScaleTransition(
             scale: _animation,
@@ -66,5 +67,3 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
   }
 }
-
-

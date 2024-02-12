@@ -141,6 +141,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                             //     ),
                             //   ),
                             // );
+                            Navigator.push(context, CupertinoPageRoute(builder: (context) => OtpGet(verificationId: verificationId)));
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {
                             setState(() {

@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/home_p.dart';
-
+import 'package:moviemate/pages/registration.dart';
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
-import 'package:moviemate/pages/naviagation_bar.dart';
+
 
 class OtpGet extends StatefulWidget {
   const OtpGet({Key? key, required this.verificationId});
@@ -112,7 +112,8 @@ class _OtpGetState extends State<OtpGet> {
                 child: ElevatedButton(
                   onPressed: () {
                     _verifyOtp();
-                  //  Navigator.push(context, MaterialPageRoute(builder: (context)=>const nav()));
+                   Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,6 +133,7 @@ class _OtpGetState extends State<OtpGet> {
               TextButton(
                   onPressed: () {
                    // Navigator.pushNamed(context, Routes.phoneScreen);
+                    Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
                   },
                   child: Text(
                     'Edit Phone Number ?',

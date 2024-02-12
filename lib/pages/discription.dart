@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:moviemate/pages/theater.dart';
 
 class DescriptionPage extends StatefulWidget {
 final QueryDocumentSnapshot snapshot;
+
 
 
   const DescriptionPage({Key? key , required this.snapshot}) : super(key: key);
@@ -128,6 +131,10 @@ class _DescriptionPageState extends State<DescriptionPage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> Theater(
+                    movieName: widget.snapshot['name'],
+                    imageUrl: widget.snapshot['image_url'],
+                  )));
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),

@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 
 class Theater extends StatefulWidget {
-  const Theater({Key? key});
+final String movieName;
+final String imageUrl;
+  const Theater({Key? key, required this.movieName, required this.imageUrl});
 
   @override
   State<Theater> createState() => _TheaterState();
-  static Route<dynamic> route(RouteSettings routeSettings){
-    return CupertinoPageRoute(
-      builder: (_) => Theater(),
-    );
-  }
+
 }
 
 class _TheaterState extends State<Theater> {
@@ -80,7 +78,7 @@ class _TheaterState extends State<Theater> {
                                                 child: Container(
                                                   padding: EdgeInsets.all(20),
 
-                                                  height: 220,
+                                                  // height: 220,
                                                   width: 200,
                                                   child: Column(
                                                     crossAxisAlignment:
@@ -137,6 +135,7 @@ class _TheaterState extends State<Theater> {
                                                                         .w300),
                                                           ),
                                                           SizedBox(
+                                                            //height: 120,
                                                             width: MediaQuery.of(
                                                                         context)
                                                                     .size
@@ -170,7 +169,12 @@ class _TheaterState extends State<Theater> {
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
                                        onTap: () {
-                                         // Navigator.pushNamed(context, Routes.seat_select);
+                                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> SeatSelection(
+                                          theaterName: snapshots.data!.docs[index]['name'],
+                                          showtime: '10:00 am',
+                                            movieName:widget.movieName,
+                                            imageUrl:widget.imageUrl,
+                                        )));
                                       },
                                       child: Container(
                                         height: 30,
