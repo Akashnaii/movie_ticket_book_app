@@ -12,42 +12,31 @@ class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
-bool isUserLoggedIn = false;
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
+class _SplashScreenState extends State<SplashScreen> {
+  bool isUserLoggedIn = false; // Assume the user is not logged in by default
 
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 2500));
-    _animation = CurvedAnimation(parent: _animationController, curve: Curves.bounceOut, reverseCurve: Curves.bounceIn);
-
-    _animationController.forward();
-
-    // Set up a timer to navigate to the next screen after 2 seconds (adjust the duration as needed)
+    // Set up a timer to navigate to the next screen after 4 seconds
     Timer(Duration(seconds: 4), () {
       // Check if the user is already logged in
-      // Replace this condition with your actual authentication logic
       if (isUserLoggedIn) {
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+        Navigator.pushReplacement(
+            context, CupertinoPageRoute(builder: (context) => HomeP()));
       } else {
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
+        Navigator.pushReplacement(
+            context, CupertinoPageRoute(builder: (context) => PhoneAuth()));
       }
     });
   }
 
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
     return Scaffold(
       backgroundColor: const Color(0x000000FF),
@@ -58,10 +47,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
           ),
-          child: ScaleTransition(
-            scale: _animation,
-            child: Image.asset('assets/app_logo.png'),
-          ),
+          child: Image.asset('assets/app_logo.png'),
         ),
       ),
     );

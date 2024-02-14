@@ -5,45 +5,53 @@ import 'package:flutter/material.dart';
 
 import 'Creditcard.dart';
 
-
 class SeatSelection extends StatefulWidget {
   final String? theaterName;
   final String? showtime;
   final String movieName;
   final String imageUrl;
-  const SeatSelection({super.key, this.theaterName, this.showtime, required this.movieName, required this.imageUrl,});
 
+  const SeatSelection({
+    Key? key,
+    this.theaterName,
+    this.showtime,
+    required this.movieName,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   State<SeatSelection> createState() => _SeatSelectionState();
-
 }
 
 class _SeatSelectionState extends State<SeatSelection> {
   List<List<bool>> selectedSeatsA = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
-  ); //
-  // 4*4 seat grid
+        (row) => List.generate(4, (column) => false),
+  );
+
   List<List<bool>> selectedSeatsA1 = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
+        (row) => List.generate(4, (column) => false),
   );
+
   List<List<bool>> selectedSeatsB = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
+        (row) => List.generate(4, (column) => false),
   );
+
   List<List<bool>> selectedSeatsB1 = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
+        (row) => List.generate(4, (column) => false),
   );
+
   List<List<bool>> selectedSeatsC = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
+        (row) => List.generate(4, (column) => false),
   );
+
   List<List<bool>> selectedSeatsC1 = List.generate(
     4,
-    (row) => List.generate(4, (column) => false),
+        (row) => List.generate(4, (column) => false),
   );
 
   Map<String, double> seatPrices = {
@@ -64,7 +72,14 @@ class _SeatSelectionState extends State<SeatSelection> {
     'H1': 300, 'H2': 300, 'H3': 300, 'H4': 300, 'H5': 300, 'H6': 300, 'H7': 300,
     'H8': 300,
   };
+
   StreamController<double> totalPriceController = StreamController<double>();
+
+  @override
+  void dispose() {
+    totalPriceController.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +95,15 @@ class _SeatSelectionState extends State<SeatSelection> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 30),
-          Text('Price [ A ]',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            'Price [ A ]',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 10),
-          Text('500/-',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          Text(
+            '500/-',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -97,11 +116,15 @@ class _SeatSelectionState extends State<SeatSelection> {
             ),
           ),
           SizedBox(height: 15),
-          Text('Price[ B,C,D ]',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            'Price[ B,C,D ]',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 15),
-          Text('400/-',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          Text(
+            '400/-',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -114,11 +137,15 @@ class _SeatSelectionState extends State<SeatSelection> {
             ),
           ),
           SizedBox(height: 15),
-          Text('Price[ E,F,G,H ]',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            'Price[ E,F,G,H ]',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 15),
-          Text('300/-',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          Text(
+            '300/-',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
           SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -139,19 +166,24 @@ class _SeatSelectionState extends State<SeatSelection> {
                   List<String> selectedSeatNumbers = getSelectedSeats();
                   double total = calculateTotalPrice(selectedSeatNumbers);
                   totalPriceController.add(total);
-                  // Navigator.pushNamed(context, Routes.creditCard);
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> CreditCardScreen(
-                    theaterName: widget.theaterName,
-                    showtime: widget.showtime,
-                    selectedSeats: selectedSeatNumbers,
-                    totalPrice: total,
-                    movieName: widget.movieName,
-                    imageUrl: widget.imageUrl,
-                  )));
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => CreditCardScreen(
+                        theaterName: widget.theaterName,
+                        showtime: widget.showtime,
+                        selectedSeats: selectedSeatNumbers,
+                        totalPrice: total,
+                        movieName: widget.movieName,
+                        imageUrl: widget.imageUrl,
+                      ),
+                    ),
+                  );
                   print('Selected Seats: $selectedSeatNumbers');
                 },
                 child: Text(
-                    'Pay - \₹ ${snapshot.data?.toStringAsFixed(2) ?? "0.00"}'),
+                  'Pay - \₹ ${snapshot.data?.toStringAsFixed(2) ?? "0.00"}',
+                ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
                 ),
@@ -167,16 +199,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         1,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
                 toggleSeatSelection(row, column, selectedSeatsA, context);
               },
-              child:
-                  buildSeatContainer(selectedSeatsA[row][column], row, column),
+              child: buildSeatContainer(selectedSeatsA[row][column], row, column),
             ),
           ),
         ),
@@ -188,16 +219,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         1,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
                 toggleSeatSelection(row, column, selectedSeatsA1, context);
               },
-              child: buildSeatContainer(
-                  selectedSeatsA1[row][column], row, column + 4),
+              child: buildSeatContainer(selectedSeatsA1[row][column], row, column + 4),
             ),
           ),
         ),
@@ -209,16 +239,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         3,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
-                toggleSeatSelection(row, column, selectedSeatsB , context);
+                toggleSeatSelection(row, column, selectedSeatsB, context);
               },
-              child: buildSeatContainer(
-                  selectedSeatsB[row][column], row + 1, column),
+              child: buildSeatContainer(selectedSeatsB[row][column], row + 1, column),
             ),
           ),
         ),
@@ -230,16 +259,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         3,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
                 toggleSeatSelection(row, column, selectedSeatsB1, context);
               },
-              child: buildSeatContainer(
-                  selectedSeatsB1[row][column], row + 1, column + 4),
+              child: buildSeatContainer(selectedSeatsB1[row][column], row + 1, column + 4),
             ),
           ),
         ),
@@ -251,16 +279,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         4,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
                 toggleSeatSelection(row, column, selectedSeatsC, context);
               },
-              child: buildSeatContainer(
-                  selectedSeatsC[row][column], row + 4, column),
+              child: buildSeatContainer(selectedSeatsC[row][column], row + 4, column),
             ),
           ),
         ),
@@ -272,16 +299,15 @@ class _SeatSelectionState extends State<SeatSelection> {
     return Column(
       children: List.generate(
         4,
-        (row) => Row(
+            (row) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
             4,
-            (column) => GestureDetector(
+                (column) => GestureDetector(
               onTap: () {
                 toggleSeatSelection(row, column, selectedSeatsC1, context);
               },
-              child: buildSeatContainer(
-                  selectedSeatsC1[row][column], row + 4, column + 4),
+              child: buildSeatContainer(selectedSeatsC1[row][column], row + 4, column + 4),
             ),
           ),
         ),
@@ -312,37 +338,39 @@ class _SeatSelectionState extends State<SeatSelection> {
   void toggleSeatSelection(
       int row, int column, List<List<bool>> selectedSeats, BuildContext context) {
     setState(() {
-      // Check if the total selected seats are less than 10 before toggling
-      if (getSelectedSeats().length < 10) {
-        selectedSeats[row][column] = !selectedSeats[row][column];
-
-        // Calculate total price and update the stream
-        List<String> selectedSeatNumbers = getSelectedSeats();
-        double total = calculateTotalPrice(selectedSeatNumbers);
-        totalPriceController.add(total);
+      if (selectedSeats[row][column]) {
+        selectedSeats[row][column] = false;
       } else {
-        // Show a message using a dialog box to notify the user that the limit is reached
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Seat Selection Limit'),
-              content: Text('Maximum 10 seats can be selected.'),
-              actions: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+        if (getSelectedSeats().length < 10) {
+          selectedSeats[row][column] = !selectedSeats[row][column];
+
+          // Calculate total price and update the stream
+          List<String> selectedSeatNumbers = getSelectedSeats();
+          double total = calculateTotalPrice(selectedSeatNumbers);
+          totalPriceController.add(total);
+        } else {
+          // Show a message using a dialog box to notify the user that the limit is reached
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Seat Selection Limit'),
+                content: Text('Maximum 10 seats can be selected.'),
+                actions: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     });
   }
-
 
   List<String> getSelectedSeats() {
     List<String> result = [];

@@ -6,9 +6,8 @@ import 'package:moviemate/Navigationbar/Settingscreen.dart';
 import 'package:moviemate/pages/booking_history.dart';
 import 'package:moviemate/pages/discription.dart';
 
-
 class HomeP extends StatefulWidget {
-  const HomeP({Key? key});
+  const HomeP({Key? key}) : super(key: key);
 
   @override
   State<HomeP> createState() => _HomePState();
@@ -48,14 +47,13 @@ class _HomePState extends State<HomeP> {
                     padding: const EdgeInsets.only(left: 8),
                     child: Row(
                       children: [
-                         Text(
+                        Text(
                           'Trending',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -66,7 +64,7 @@ class _HomePState extends State<HomeP> {
                       if (snapshots.connectionState ==
                           ConnectionState.waiting) {
                         return Center(
-                          child:  Center(child: CircularProgressIndicator()),
+                          child: Center(child: CircularProgressIndicator()),
                         );
                       }
                       if (snapshots.hasError)
@@ -151,11 +149,9 @@ class _HomePState extends State<HomeP> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: GestureDetector(
-
-                                    onTap: () {
-                                      Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
-                                    },
-
+                                  onTap: () {
+                                    Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
+                                  },
                                   child: Image.network(
                                     snapshots.data!.docs[index]['image_url'],
                                     width: 100,
@@ -330,14 +326,21 @@ class _HomePState extends State<HomeP> {
             onTap: (int index) {
               switch (index) {
                 case 0:
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeP()));
                   break;
 
-                   case 1:
-                 Navigator.push(context, CupertinoPageRoute(builder: (context)=> BookingHistory()));
-              break;
+                case 1:
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => BookingHistory(
+                        eventType: 'All Events', // Specify a generic event type or leave it empty
+                      ),
+                    ),
+                  );
+                  break;
                 case 2:
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> SettingScreen()));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context) => SettingScreen()));
                   break;
               }
               setState(() {
@@ -350,4 +353,3 @@ class _HomePState extends State<HomeP> {
     );
   }
 }
-

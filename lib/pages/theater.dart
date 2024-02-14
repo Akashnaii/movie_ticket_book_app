@@ -15,8 +15,7 @@ final String imageUrl;
 
 class _TheaterState extends State<Theater> {
   final title = FirebaseFirestore.instance.collection('movies').snapshots();
-  final firestore =
-      FirebaseFirestore.instance.collection('theater').snapshots();
+  final firestore = FirebaseFirestore.instance.collection('theater').snapshots();
 
   @override
   Widget build(BuildContext context) {

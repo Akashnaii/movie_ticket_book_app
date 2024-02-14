@@ -4,8 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moviemate/pages/home_p.dart';
 
-
-
 class TransactionSuccessful extends StatefulWidget {
   final String? theaterName;
   final String? showtime;
@@ -13,11 +11,18 @@ class TransactionSuccessful extends StatefulWidget {
   final double totalPrice;
   final String movieName;
   final String imageUrl;
-  const TransactionSuccessful({super.key, this.theaterName, this.showtime, required this.selectedSeats, required this.totalPrice, required this.movieName, required this.imageUrl});
+  const TransactionSuccessful(
+      {
+        super.key,
+      this.theaterName,
+      this.showtime,
+      required this.selectedSeats,
+      required this.totalPrice,
+      required this.movieName,
+      required this.imageUrl});
 
   @override
   State<TransactionSuccessful> createState() => _TransactionSuccessfulState();
-
 }
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
@@ -29,33 +34,44 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Container(
-              padding: const EdgeInsets.only(top:30),
+              padding: const EdgeInsets.only(top: 30),
               height: 220,
               width: 280,
-             child: Lottie.asset("assets/images/sus.json"),
+              child: Lottie.asset("assets/images/sus.json"),
             ),
-            SizedBox(height: 30),
-           Text("Transaction Successfull ",style:TextStyle(
-             fontStyle: FontStyle.italic,fontWeight: FontWeight.bold,fontSize: 25,color: Colors.white,
-           ),
-           ),
+           const SizedBox(height: 30),
+            const Text(
+              "Transaction Successfull ",
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                color: Colors.white,
+              ),
+            ),
             const SizedBox(height: 310),
-            ElevatedButton(onPressed: (){
-// Navigator.pushNamed(context, Routes.Home_p);
-            Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeP()));
-            },
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context, CupertinoPageRoute(builder: (context) => const HomeP()));
+              },
               style: ButtonStyle(
-                fixedSize:MaterialStateProperty.all<Size>(
-                  Size(185, 55),)
+                  fixedSize: MaterialStateProperty.all<Size>(
+                const Size(185, 55),
+              )),
+              child: const Text(
+                "Done",
+                style:  TextStyle(
+                    fontStyle: FontStyle.normal,
+                    fontSize: 20,
+                    color: Colors.white),
               ),
-              child: Text("Done",style:TextStyle(
-                fontStyle: FontStyle.normal,fontSize: 20,color: Colors.white ),
-              ),
-              ),
-            SizedBox(height: 30,)
-
+            ),
+            const SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),

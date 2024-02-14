@@ -112,23 +112,28 @@ class _CreditCardScreenState extends State<CreditCardScreen> {
 
   void openDatePicker() async {
     startDate = await showDatePicker(
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-                colorScheme: Theme.of(context).colorScheme.copyWith(
-                    onPrimary: Theme.of(context).scaffoldBackgroundColor)),
-            child: child!,
-          );
-        },
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(DateTime.monthsPerYear),
-        lastDate: DateTime.now().add(const Duration(days: 30)));
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+              colorScheme: Theme.of(context).colorScheme.copyWith(
+                  onPrimary: Theme.of(context).scaffoldBackgroundColor)),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year, DateTime.now().month),
+      lastDate: DateTime.now().add(const Duration(days: 30)),
+    );
 
     setState(() {
-      date.text = DateFormat('dd-MM-yyyy').format(startDate!).toString();
+      if (startDate != null) {
+        date.text = DateFormat('dd-MM-yyyy').format(startDate!).toString();
+      }
     });
   }
+
+
 
   void validateCardDetails() {
     // Add your validation logic here based on card details

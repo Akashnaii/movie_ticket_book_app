@@ -201,6 +201,7 @@ class _registration_pState extends State<registration_p> {
           duration: Duration(seconds: 2),
         ),
       );
+      // Navigate to the HomeP page only after successful form submission
       Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
     })
         .catchError((error) {
@@ -210,7 +211,7 @@ class _registration_pState extends State<registration_p> {
           duration: Duration(seconds: 2),
         ),
       );
-
     });
   }
+
 }
