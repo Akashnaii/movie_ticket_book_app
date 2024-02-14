@@ -70,10 +70,17 @@ class _SeatSelectionState extends State<SeatSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        centerTitle: true,
         backgroundColor: Colors.black,
         title: Text(
-          'Book your seats:',
-          style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+          'Book your seats',
+          style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold,color: Colors.white),
         ),
       ),
       body: Column(

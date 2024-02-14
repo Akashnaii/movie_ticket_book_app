@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-
 import 'package:intl/intl.dart';
-
 import 'Input_information.dart';
 
 class CreditCardScreen extends StatefulWidget {
@@ -17,6 +14,7 @@ class CreditCardScreen extends StatefulWidget {
 
   @override
   State<CreditCardScreen> createState() => _CreditCardScreenstate();
+  
 }
 
 class _CreditCardScreenstate extends State<CreditCardScreen> {
@@ -34,13 +32,14 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
             child: child!,
           );
         },
+        initialDatePickerMode: DatePickerMode.year,
         context: context,
         initialDate: DateTime.now(),
-        firstDate:DateTime(DateTime.now().year, DateTime.monthsPerYear),
+        firstDate:DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days:3650)));
 
     setState(() {
-      date.text = DateFormat('MM/yyyy').format(startDate!).toString();
+      date.text = DateFormat('MM/yyyy').format(startDate??DateTime.now()).toString();
     });
   }
   @override
@@ -49,7 +48,23 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
       // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("New Card"),
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 2,
+        backgroundColor: Colors.black,
+        title: const Text(
+          'Payment Gateway',
+          style: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -110,7 +125,9 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                             child: TextFormField(
                               readOnly: true,
                                 onTap: (){
-                                  openDatePicker();
+                                  setState(() {
+                                    openDatePicker();
+                                  });
                                 },
                               controller: date,
                               keyboardType: TextInputType.number,

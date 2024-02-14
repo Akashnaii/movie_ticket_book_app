@@ -1,36 +1,85 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/seat_selection.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Theater extends StatefulWidget {
-final String movieName;
-final String imageUrl;
-  const Theater({Key? key, required this.movieName, required this.imageUrl});
+  final String movieName;
+  final String imageUrl;
+
+  const Theater({Key? key, required this.movieName, required this.imageUrl}) : super(key: key);
 
   @override
   State<Theater> createState() => _TheaterState();
-
 }
 
 class _TheaterState extends State<Theater> {
   final title = FirebaseFirestore.instance.collection('movies').snapshots();
-  final firestore =
-      FirebaseFirestore.instance.collection('theater').snapshots();
+  final firestore = FirebaseFirestore.instance.collection('theater').snapshots();
+
+  DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+        ),
+        centerTitle: true,
+        elevation: 2,
+        backgroundColor: Colors.black,
+        title: const Text(
+          'Theatres',
+          style: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.only(bottom: 10)),
-            Padding(padding: EdgeInsets.only(bottom: 10)),
-
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: EasyDateTimeLine(
+                initialDate: _selectedDate,
+                onDateChange: (selectedDate) {
+                  setState(() {
+                    _selectedDate = selectedDate;
+                  });
+                },
+                activeColor: const Color(0xFF6CD95B),
+                headerProps: const EasyHeaderProps(
+                  dateFormatter: DateFormatter.monthOnly(),
+                ),
+                dayProps: const EasyDayProps(
+                  height: 56.0,
+                  width: 56.0,
+                  dayStructure: DayStructure.dayNumDayStr,
+                  inactiveDayStyle: DayStyle(
+                    borderRadius: 48.0,
+                    dayNumStyle: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  activeDayStyle: DayStyle(
+                    dayNumStyle: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             StreamBuilder<QuerySnapshot>(
               stream: firestore,
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshots) {
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshots) {
                 if (snapshots.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -55,141 +104,117 @@ class _TheaterState extends State<Theater> {
                               Row(
                                 children: [
                                   SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      child: Text(
-                                        snapshots.data!.docs[index]['name'],
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                    width: MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      snapshots.data!.docs[index]['name'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                   const Spacer(),
                                   IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20)),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
                                           ),
-                                          context: context,
-
-                                          builder: (context) =>
-                                              SingleChildScrollView(
-                                                child: Container(
-                                                  padding: EdgeInsets.all(20),
-
-                                                  // height: 220,
-                                                  width: 200,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Text(
-                                                            'Name : ',
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300),
-                                                          ),
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.7,
-                                                            child: Text(
-                                                              '${snapshots.data!.docs[index]['name']}',
-                                                              style: const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300),
-                                                            ),
-                                                          ),
-                                                        ],
+                                        ),
+                                        context: context,
+                                        builder: (context) => SingleChildScrollView(
+                                          child: Container(
+                                            padding: EdgeInsets.all(20),
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      'Name : ',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w300,
                                                       ),
-
-
-                                                      const SizedBox(height: 15),
-
-                                                      SizedBox(height: 15),
-
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          const Text(
-                                                            'Address : ',
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300),
-                                                          ),
-                                                          SizedBox(
-                                                            //height: 120,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.6,
-                                                            child: Text(
-                                                              '${snapshots.data!.docs[index]['address']}',
-                                                              style: const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: MediaQuery.of(context).size.width * 0.7,
+                                                      child: Text(
+                                                        '${snapshots.data!.docs[index]['name']}',
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.w300,
+                                                        ),
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ));
+                                                const SizedBox(height: 15),
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      'Address : ',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w300,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: MediaQuery.of(context).size.width * 0.6,
+                                                      child: Text(
+                                                        '${snapshots.data!.docs[index]['address']}',
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.w300,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
                                     },
                                     icon: const Icon(Icons.location_on),
                                   ),
                                 ],
                               ),
-                              // Use in the showtime .. list..
                               Row(
                                 children: List.generate(
                                   4,
-                                  (index) => Padding(
+                                      (index) => Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
-                                       onTap: () {
-                                        Navigator.push(context, CupertinoPageRoute(builder: (context)=> SeatSelection(
-                                          theaterName: snapshots.data!.docs[index]['name'],
-                                          showtime: '10:00 am',
-                                            movieName:widget.movieName,
-                                            imageUrl:widget.imageUrl,
-                                        )));
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => SeatSelection(
+                                              theaterName: snapshots.data!.docs[index]['name'],
+                                              showtime: '10:00 am',
+                                              movieName: widget.movieName,
+                                              imageUrl: widget.imageUrl,
+                                            ),
+                                          ),
+                                        );
                                       },
                                       child: Container(
                                         height: 30,
                                         width: 70,
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
+                                          border: Border.all(color: Colors.black),
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
                                         child: const Center(
                                           child: Text(
                                             '10:00 am',
-                                            style: TextStyle(
-                                                color: Color(0xFF4BB33B)),
+                                            style: TextStyle(color: Color(0xFF4BB33B)),
                                           ),
                                         ),
                                       ),
