@@ -30,7 +30,7 @@ class _SettingScreenState extends State<SettingScreen> {
           elevation: 2,
           backgroundColor: Colors.white,
           title: const Text(
-            'Setting',
+            'Settings',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

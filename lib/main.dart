@@ -4,6 +4,9 @@ import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/transaction_succes.dart';
 
+import 'package:moviemate/pages/theater.dart';
+import 'Navigationbar/Settingscreen.dart';
+import 'pages/fetchuser.dart';
 
 
 
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  MaterialApp(
-      home: HomeP(),
+      home: Theater(movieName: 'name', imageUrl: 'image_url'),
     );
   }
 }
