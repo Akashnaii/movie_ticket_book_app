@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -11,6 +13,8 @@ class TransactionSuccessful extends StatefulWidget {
   final double totalPrice;
   final String movieName;
   final String imageUrl;
+  final String selectedDate;
+
   const TransactionSuccessful(
       {
         super.key,
@@ -19,13 +23,45 @@ class TransactionSuccessful extends StatefulWidget {
       required this.selectedSeats,
       required this.totalPrice,
       required this.movieName,
-      required this.imageUrl});
+      required this.imageUrl,
+        required this.selectedDate});
 
   @override
   State<TransactionSuccessful> createState() => _TransactionSuccessfulState();
 }
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
+
+  Future<void> addHistory() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    FirebaseAuth firestoreAuth = FirebaseAuth.instance;
+
+    firestore.collection('users').doc(firestoreAuth.currentUser?.uid).collection("BookingHistory").add({
+      'image_url' : widget.imageUrl,
+      'name': widget.movieName,
+      'theaterName': widget.theaterName,
+      'showtime': widget.showtime,
+      'selectedSeats': widget.selectedSeats,
+      'totalPrice': widget.totalPrice,
+      'selectedDate': widget.selectedDate,
+    }).then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Booking History Add Successfully'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      // Navigate to the HomeP page only after successful form submission
+      Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to add user data: $error'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +75,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
               padding: const EdgeInsets.only(top: 30),
               height: 220,
               width: 280,
-              child: Lottie.asset("assets/images/sus.json"),
+              child: Lottie.asset("assets/sus.json"),
             ),
            const SizedBox(height: 30),
             const Text(
@@ -54,8 +90,9 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
             const SizedBox(height: 310),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (context) => const HomeP()));
+                addHistory();
+                // Navigator.push(
+                //     context, CupertinoPageRoute(builder: (context) => const HomeP()));
               },
               style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(

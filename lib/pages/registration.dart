@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class registration_p extends StatefulWidget {
   const registration_p({Key? key}) : super(key: key);
@@ -121,8 +122,10 @@ class _registration_pState extends State<registration_p> {
               const SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
                     _validateFields();
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('isloggedIn', true);
                   Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
                     },
                   style: ElevatedButton.styleFrom(

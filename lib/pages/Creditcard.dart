@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:moviemate/pages/transaction_succes.dart';
 import 'Input_information.dart';
 
 class CreditCardScreen extends StatefulWidget {
@@ -10,15 +12,22 @@ class CreditCardScreen extends StatefulWidget {
   final double totalPrice;
   final String movieName;
   final String imageUrl;
-  const CreditCardScreen({Key? key, this.theaterName, this.showtime, required this.selectedSeats, required this.totalPrice, required this.movieName, required this.imageUrl}) : super(key: key);
+  final String selectedDate;
+  const CreditCardScreen(
+      {Key? key,
+      this.theaterName,
+      this.showtime,
+      required this.selectedSeats,
+      required this.totalPrice,
+      required this.movieName,
+      required this.imageUrl, required this.selectedDate})
+      : super(key: key);
 
   @override
   State<CreditCardScreen> createState() => _CreditCardScreenstate();
-  
 }
 
 class _CreditCardScreenstate extends State<CreditCardScreen> {
-
   TextEditingController cardnumberController = TextEditingController();
   TextEditingController date = TextEditingController();
   DateTime? startDate;
@@ -35,13 +44,15 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
         initialDatePickerMode: DatePickerMode.year,
         context: context,
         initialDate: DateTime.now(),
-        firstDate:DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days:3650)));
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 3650)));
 
     setState(() {
-      date.text = DateFormat('MM/yyyy').format(startDate??DateTime.now()).toString();
+      date.text =
+          DateFormat('MM/yyyy').format(startDate ?? DateTime.now()).toString();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +60,7 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -89,18 +100,16 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                       ),
                     ),
                     SizedBox(height: 15),
-                     TextFormField(
-                       inputFormatters: [
-                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
-                       ],
-
-                       decoration: InputDecoration(
-                         hintText: "Full Name",
-                         prefixIcon: Icon(Icons.person),
-                         border: OutlineInputBorder(),
-
-                       ),
-                     ),
+                    TextFormField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: "Full Name",
+                        prefixIcon: Icon(Icons.person),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                     SizedBox(height: 15),
                     Row(
                       children: [
@@ -108,7 +117,7 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                             child: TextFormField(
                                 keyboardType: TextInputType.number,
                                 // Limit the Number
-                                inputFormatters:[
+                                inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
                                   LengthLimitingTextInputFormatter(3),
                                 ],
@@ -116,50 +125,61 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                                   hintText: "CVV",
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.lock),
-
-                                )
-                            )
-                        ),
+                                ))),
                         const SizedBox(width: 25),
                         Expanded(
-                            child: TextFormField(
-                              readOnly: true,
-                                onTap: (){
-                                  setState(() {
-                                    openDatePicker();
-                                  });
-                                },
-                              controller: date,
-                              keyboardType: TextInputType.number,
-                                // Limit the Number
-                                inputFormatters:[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(4),
-                                  CardMonthInputerFormatter(),
-                                ],
-                                decoration: InputDecoration(
-                                  hintText: startDate != null? "${startDate?.month}/${startDate?.year}" :"MM/YY",
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.calendar_month),
-                                ),
+                          child: TextFormField(
+                            readOnly: true,
+                            onTap: () {
+                              setState(() {
+                                openDatePicker();
+                              });
+                            },
+                            controller: date,
+                            keyboardType: TextInputType.number,
+                            // Limit the Number
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                              CardMonthInputerFormatter(),
+                            ],
+                            decoration: InputDecoration(
+                              hintText: startDate != null
+                                  ? "${startDate?.month}/${startDate?.year}"
+                                  : "MM/YY",
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.calendar_month),
                             ),
+                          ),
                         ),
                       ],
                     ),
-                    ],
-                    ),
+                  ],
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top:60),
-                  child:Container(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: Container(
                     width: 150,
                     height: 50,
-                    child: ElevatedButton(child: Text("Submit",style: TextStyle(fontSize: 18),),
-                    onPressed: () {},
-
+                    child: ElevatedButton(
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => TransactionSuccessful(
+                                    selectedSeats: widget.selectedSeats,
+                                    totalPrice: widget.totalPrice,
+                                    movieName: widget.movieName,
+                                    imageUrl: widget.imageUrl,
+                                  selectedDate: widget.selectedDate,)));
+                      },
+                    ),
                   ),
                 ),
-                ),
-
               ],
             ),
           ),
@@ -167,8 +187,6 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
       ),
     );
   }
-
-
 }
 
 class CardNumberInputFormatter extends TextInputFormatter {
@@ -191,13 +209,10 @@ class CardNumberInputFormatter extends TextInputFormatter {
     }
 
     return TextEditingValue(
-        text: buffer.toString(),
-        selection: TextSelection.collapsed(
-          offset: buffer.toString().length,
-        ),
+      text: buffer.toString(),
+      selection: TextSelection.collapsed(
+        offset: buffer.toString().length,
+      ),
     );
   }
 }
-
-
-

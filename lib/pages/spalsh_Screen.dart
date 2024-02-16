@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,16 +15,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool isUserLoggedIn = false; // Assume the user is not logged in by default
+  //bool isUserLoggedIn = false; // Assume the user is not logged in by default
 
   @override
   void initState() {
     super.initState();
 
     // Set up a timer to navigate to the next screen after 4 seconds
-    Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 4), () async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool? isloggedIn =prefs.getBool('isloggedIn');
       // Check if the user is already logged in
-      if (isUserLoggedIn) {
+      if (isloggedIn ?? false) {
         Navigator.pushReplacement(
             context, CupertinoPageRoute(builder: (context) => HomeP()));
       } else {

@@ -45,6 +45,7 @@ dependencies:
   datetime_picker_formfield_new: ^2.1.0
   image_picker: ^1.0.7
   easy_date_timeline: ^1.0.2
+  shared_preferences: ^2.2.2
 
   carousel_slider: ^4.2.1
   lottie:

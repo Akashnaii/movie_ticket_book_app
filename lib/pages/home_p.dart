@@ -333,9 +333,7 @@ class _HomePState extends State<HomeP> {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => BookingHistory(
-                        eventType: 'All Events', // Specify a generic event type or leave it empty
-                      ),
+                      builder: (context) => BookingHistory(),
                     ),
                   );
                   break;

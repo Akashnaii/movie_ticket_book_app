@@ -1,6 +1,7 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -185,9 +186,9 @@ class _TheaterState extends State<Theater> {
                                   ),
                                 ],
                               ),
-                              Row(
+                              Wrap(
                                 children: List.generate(
-                                  4,
+                                  snapshots.data!.docs[index]['showtime'].length,
                                       (index) => Padding(
                                     padding: const EdgeInsets.all(5),
                                     child: InkWell(
@@ -196,10 +197,11 @@ class _TheaterState extends State<Theater> {
                                           context,
                                           CupertinoPageRoute(
                                             builder: (context) => SeatSelection(
-                                              theaterName: snapshots.data!.docs[index]['name'],
-                                              showtime: '10:00 am',
+                                              theaterName: snapshots.data!.docs[index]['name'] ?? '',
+                                              showtime: snapshots.data!.docs[index]['showtime'] ??  '',
                                               movieName: widget.movieName,
                                               imageUrl: widget.imageUrl,
+                                              selectedDate : DateFormat("dd-MM-yyyy").format(_selectedDate).toString(),
                                             ),
                                           ),
                                         );
@@ -211,9 +213,9 @@ class _TheaterState extends State<Theater> {
                                           border: Border.all(color: Colors.black),
                                           borderRadius: BorderRadius.circular(5),
                                         ),
-                                        child: const Center(
+                                        child:  Center(
                                           child: Text(
-                                            '10:00 am',
+                                            snapshots.data!.docs[index]['showtime'][index].toString(),
                                             style: TextStyle(color: Color(0xFF4BB33B)),
                                           ),
                                         ),

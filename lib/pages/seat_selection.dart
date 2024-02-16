@@ -10,6 +10,7 @@ class SeatSelection extends StatefulWidget {
   final String? showtime;
   final String movieName;
   final String imageUrl;
+  final String selectedDate;
 
   const SeatSelection({
     Key? key,
@@ -17,6 +18,7 @@ class SeatSelection extends StatefulWidget {
     this.showtime,
     required this.movieName,
     required this.imageUrl,
+    required this.selectedDate
   }) : super(key: key);
 
   @override
@@ -183,6 +185,8 @@ class _SeatSelectionState extends State<SeatSelection> {
                         totalPrice: total,
                         movieName: widget.movieName,
                         imageUrl: widget.imageUrl,
+                        selectedDate: widget.selectedDate,
+
                       ),
                     ),
                   );
