@@ -100,16 +100,18 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                       ),
                     ),
                     SizedBox(height: 15),
-                    TextFormField(
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                        hintText: "Full Name",
-                        prefixIcon: Icon(Icons.person),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
+                     TextFormField(
+                       inputFormatters: [
+                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                       ],
+
+                       decoration: InputDecoration(
+                         hintText: "Full Name",
+                         prefixIcon: Icon(Icons.person),
+                         border: OutlineInputBorder(),
+
+                       ),
+                     ),
                     SizedBox(height: 15),
                     Row(
                       children: [
