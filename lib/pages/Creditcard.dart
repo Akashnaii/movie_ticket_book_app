@@ -91,7 +91,7 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                     SizedBox(height: 15),
                      TextFormField(
                        inputFormatters: [
-                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
+                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
                        ],
 
                        decoration: InputDecoration(

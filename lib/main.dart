@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/Creditcard.dart';
+import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/transaction_succes.dart';
@@ -23,8 +25,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return  MaterialApp(
-      home: Theater(movieName: 'name', imageUrl: 'image_url'),
+    return  const MaterialApp(
+      home: SplashScreen(),
     );
   }
 }
