@@ -103,7 +103,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                 style:  TextStyle(
                     fontStyle: FontStyle.normal,
                     fontSize: 20,
-                    color: Colors.white),
+                    color: Colors.deepPurple),
               ),
             ),
             const SizedBox(

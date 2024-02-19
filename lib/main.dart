@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moviemate/pages/booking_history.dart';
+import 'package:moviemate/pages/Creditcard.dart';
+import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/transaction_succes.dart';
