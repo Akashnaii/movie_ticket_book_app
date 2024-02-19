@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  const MaterialApp(
-      home: SplashScreen(),
+      home: SeatSelection(movieName: 'name', imageUrl: 'image_url', selectedDate: '',),
     );
   }
 }

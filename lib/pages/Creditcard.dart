@@ -15,12 +15,12 @@ class CreditCardScreen extends StatefulWidget {
   final String selectedDate;
   const CreditCardScreen(
       {Key? key,
-      this.theaterName,
-      this.showtime,
-      required this.selectedSeats,
-      required this.totalPrice,
-      required this.movieName,
-      required this.imageUrl, required this.selectedDate})
+        this.theaterName,
+        this.showtime,
+        required this.selectedSeats,
+        required this.totalPrice,
+        required this.movieName,
+        required this.imageUrl, required this.selectedDate})
       : super(key: key);
 
   @override
@@ -28,9 +28,61 @@ class CreditCardScreen extends StatefulWidget {
 }
 
 class _CreditCardScreenstate extends State<CreditCardScreen> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController cardnumberController = TextEditingController();
   TextEditingController date = TextEditingController();
   DateTime? startDate;
+
+  String? cardNumberError;
+  String? fullNameError;
+  String? cvvError;
+  String? expiryDateError;
+
+  String? validateCardNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your card number';
+    }
+
+    // Reset error message if validation succeeds
+    return null;
+  }
+
+  String? validateFullName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your full name';
+    }
+    return null;
+  }
+  String? validateCVV(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your CVV';
+    } else if (value.length != 3) {
+      return 'Please enter a valid CVV';
+    }
+    return null;
+  }
+  String? validateExpiryDate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter expiry date';
+    }
+
+    // Validate the format
+    RegExp regex = RegExp(r"^\d{2}/\d{4}$");
+    if (!regex.hasMatch(value)) {
+      return 'Please enter a valid expiry date (MM/YYYY)';
+    }
+
+    // Validate the month and year
+    List<String> parts = value.split('/');
+    int month = int.tryParse(parts[0]) ?? 0;
+    int year = int.tryParse(parts[1]) ?? 0;
+    if (month < 1 || month > 12 || year < DateTime.now().year || year > 9999) {
+      return 'Please enter a valid expiry date (MM/YYYY)';
+    }
+
+    return null;
+  }
+
   void openDatePicker() async {
     startDate = await showDatePicker(
         builder: (context, child) {
@@ -52,6 +104,7 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
           DateFormat('MM/yyyy').format(startDate ?? DateTime.now()).toString();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,108 +134,148 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    // const Spacer(),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(12),
-                        CardNumberInputFormatter(),
-                      ],
-                      decoration: InputDecoration(
-                        hintText: "Card Number",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.credit_card),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      // const Spacer(),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(16),
+                          CardNumberInputFormatter(),
+                        ],
+                        decoration: InputDecoration(
+                          hintText: "Card Number",
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.credit_card),
+                          errorText: cardNumberError,
+                        ),
+                         // controller: cardnumberController,
+                        validator: validateCardNumber,
+                        onChanged: (value) {
+                          setState(() {
+                            cardNumberError = validateCardNumber(value);
+                          });
+                        },
                       ),
-                    ),
-                    SizedBox(height: 15),
-                     TextFormField(
-                       inputFormatters: [
-                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                       ],
-
-                       decoration: InputDecoration(
-                         hintText: "Full Name",
-                         prefixIcon: Icon(Icons.person),
-                         border: OutlineInputBorder(),
-
-                       ),
-                     ),
-                    SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
+                      SizedBox(height: 15),
+                      TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                        ],
+                        decoration: InputDecoration(
+                          hintText: "Full Name",
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          errorText: fullNameError,
+                        ),
+                        validator: validateFullName,
+                        onChanged: (value) {
+                          setState(() {
+                            fullNameError = validateFullName(value);
+                          });
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  // Limit the Number
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(3),
+                                  ],
+                                  decoration: InputDecoration(
+                                    hintText: "CVV",
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(Icons.lock),
+                                    errorText: cvvError,
+                                  ),
+                                obscureText: true,
+                                validator: validateCVV,
+                                onChanged: (value) {
+                                  setState(() {
+                                    cvvError = validateCVV(value);
+                                  });
+                                },
+                                )),
+                          const SizedBox(width: 25),
+                          Expanded(
                             child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                // Limit the Number
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(3),
-                                ],
-                                decoration: InputDecoration(
-                                  hintText: "CVV",
-                                  border: OutlineInputBorder(),
-                                  prefixIcon: Icon(Icons.lock),
-                                ))),
-                        const SizedBox(width: 25),
-                        Expanded(
-                          child: TextFormField(
-                            readOnly: true,
-                            onTap: () {
-                              setState(() {
-                                openDatePicker();
-                              });
-                            },
-                            controller: date,
-                            keyboardType: TextInputType.number,
-                            // Limit the Number
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(4),
-                              CardMonthInputerFormatter(),
-                            ],
-                            decoration: InputDecoration(
-                              hintText: startDate != null
-                                  ? "${startDate?.month}/${startDate?.year}"
-                                  : "MM/YY",
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.calendar_month),
+                              readOnly: true,
+                              onTap: () {
+                                setState(() {
+                                  openDatePicker();
+                                });
+                              },
+                              controller: date,
+                              keyboardType: TextInputType.number,
+                              // Limit the Number
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(4),
+                                CardMonthInputerFormatter(),
+                              ],
+                              decoration: InputDecoration(
+                                hintText: startDate != null
+                                    ? "${startDate?.month}/${startDate?.year}"
+                                    : "MM/YYYY",
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.calendar_month),
+                                errorText: expiryDateError,
+                              ),
+                              validator: validateExpiryDate,
+                              onChanged: (value) {
+                                setState(() {
+                                  expiryDateError = validateExpiryDate(value);
+                                });
+                              },
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: Container(
-                    width: 150,
-                    height: 50,
-                    child: ElevatedButton(
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(fontSize: 18),
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => TransactionSuccessful(
-                                    selectedSeats: widget.selectedSeats,
-                                    totalPrice: widget.totalPrice,
-                                    movieName: widget.movieName,
-                                    imageUrl: widget.imageUrl,
-                                  selectedDate: widget.selectedDate,)));
-                      },
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60),
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      child: ElevatedButton(
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                    builder: (context) =>
+                                        TransactionSuccessful(
+                                          selectedSeats: widget.selectedSeats,
+                                          totalPrice: widget.totalPrice,
+                                          movieName: widget.movieName,
+                                          imageUrl: widget.imageUrl,
+                                          selectedDate: widget.selectedDate,)));
+                          }
+                          else
+                          {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          }
+                          }
+
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

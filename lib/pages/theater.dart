@@ -20,10 +20,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     final firestore = FirebaseFirestore.instance.collection('theater').snapshots();
 
     DateTime _selectedDate = DateTime.now();
+    DateTime _minDate = DateTime.now(); // Example minimum date
+    DateTime _maxDate = DateTime.now().add(Duration(days: 9)); // Example maximum date
+
+
+    @override
+    void initState(){
+      super.initState();
+      _selectedDate = DateTime.now();
+        _minDate = DateTime.now();
+      _maxDate = DateTime.now().add(const Duration(days: 10));
+    }
 
     @override
     Widget build(BuildContext context) {
-      final DateTime maxDate = DateTime.now().add(Duration(days: 9));
+
       return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -49,17 +60,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
             children: [
               Padding(
                 padding: EdgeInsets.all(10),
-                child: EasyDateTimeLine(
-                  initialDate: _selectedDate,
+                child: EasyInfiniteDateTimeLine(
+                  firstDate: DateTime.now(),
+                  focusDate: _selectedDate,
+                  lastDate: DateTime.now().add(const Duration(days: 7)),
                   onDateChange: (selectedDate) {
                     setState(() {
                       _selectedDate = selectedDate;
                     });
                   },
+
                   activeColor: const Color(0xFF6CD95B),
-                  headerProps: const EasyHeaderProps(
-                    dateFormatter: DateFormatter.monthOnly(),
-                  ),
+
                   dayProps: const EasyDayProps(
                     height: 56.0,
                     width: 56.0,
@@ -201,7 +213,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                                                 theaterName: snapshots.data!.docs[index]['name'],
                                                 showtime: '10:00 am',
                                                 movieName: widget.movieName,
-                                                imageUrl: widget.imageUrl,
+                                                imageUrl: widget.imageUrl, selectedDate: '',
                                               ),
                                             ),
                                           );
