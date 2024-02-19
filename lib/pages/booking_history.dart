@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BookingHistory extends StatefulWidget {
-  const BookingHistory({super.key});
+  final String? theaterName;
+  final String? showtime;
+  const BookingHistory({super.key, this.theaterName, this.showtime});
 
   @override
   State<BookingHistory> createState() => _BookingHistoryState();
@@ -51,8 +53,8 @@ class _BookingHistoryState extends State<BookingHistory> {
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(snapshot.data!.docs[index]['image_url']),
                     ),
-                    title: Text(snapshot.data!.docs[index]['name']),
-                    subtitle: Text(snapshot.data!.docs[index]['name']), // Display the event type if available
+                    title: Text(snapshot.data!.docs[index]['name'].toString()),
+                    subtitle: Text(snapshot.data!.docs[index]['totalPrice'].toString()), // Display the event type if available
                     trailing: Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       // Show booking details dialog
@@ -67,24 +69,24 @@ class _BookingHistoryState extends State<BookingHistory> {
                               children: [
                                 Container(
                                   child: Image.network(
-                                    'https://tse4.mm.bing.net/th?id=OIP.1d6tBbNiJTFQNEK_k0sSjQHaFj&pid=Api&P=0&h=180',
+                                    snapshot.data!.docs[index]['image_url'],
                                     width: MediaQuery.of(context).size.width * 0.8,
                                     height: 200,
                                   ),
                                 ),
                                 SizedBox(height: 5),
                                 // Divider(thickness: 2, color: Colors.black),
-                                Text(snapshot.data!.docs[index]['name']),
+                                Text(snapshot.data!.docs[index]['name'].toString()),
                                 Divider(thickness: 2, color: Colors.black),
-                                Text(snapshot.data!.docs[index]['selectedDate']),
+                                Text(snapshot.data!.docs[index]['selectedDate'].toString()),
                                 Divider(thickness: 2, color: Colors.black),
-                                Text(snapshot.data!.docs[index]['selectedSeats']),
+                                Text(snapshot.data!.docs[index]['selectedSeats'].toString()),
                                 Divider(thickness: 2, color: Colors.black),
-                                Text(snapshot.data!.docs[index]['showtime']),
+                                Text(snapshot.data!.docs[index]['showtime'].toString()),
                                 Divider(thickness: 2, color: Colors.black),
                                 Wrap(
                                   children: [
-                                    Text(snapshot.data!.docs[index]['theaterName']),
+                                    Text(widget.theaterName.toString()),
                                   ],
                                 )
                               ],

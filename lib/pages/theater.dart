@@ -198,7 +198,7 @@ class _TheaterState extends State<Theater> {
                                           CupertinoPageRoute(
                                             builder: (context) => SeatSelection(
                                               theaterName: snapshots.data!.docs[index]['name'] ?? '',
-                                              showtime: snapshots.data!.docs[index]['showtime'] ??  '',
+                                                showtime: (snapshots.data!.docs[index]['showtime'] as List<dynamic>).join(', ') ?? '',
                                               movieName: widget.movieName,
                                               imageUrl: widget.imageUrl,
                                               selectedDate : DateFormat("dd-MM-yyyy").format(_selectedDate).toString(),
@@ -215,7 +215,7 @@ class _TheaterState extends State<Theater> {
                                         ),
                                         child:  Center(
                                           child: Text(
-                                            snapshots.data!.docs[index]['showtime'][index].toString(),
+                                            snapshots.data!.docs[index]['showtime'][index] ?? '',
                                             style: TextStyle(color: Color(0xFF4BB33B)),
                                           ),
                                         ),

@@ -5,6 +5,7 @@ import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/registration.dart';
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class OtpGet extends StatefulWidget {
@@ -110,8 +111,10 @@ class _OtpGetState extends State<OtpGet> {
                 height: 40,
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
                     _verifyOtp();
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('isloggedIn', true);
                    Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
 
                   },
@@ -131,7 +134,7 @@ class _OtpGetState extends State<OtpGet> {
                 ),
               ),
               TextButton(
-                  onPressed: () {
+                  onPressed: () async{
                    // Navigator.pushNamed(context, Routes.phoneScreen);
                     Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
                   },

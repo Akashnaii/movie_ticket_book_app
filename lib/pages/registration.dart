@@ -124,9 +124,7 @@ class _registration_pState extends State<registration_p> {
                 child: ElevatedButton(
                   onPressed: () async{
                     _validateFields();
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('isloggedIn', true);
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
                     },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.black,
@@ -192,7 +190,8 @@ class _registration_pState extends State<registration_p> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     FirebaseAuth firestoreAuth = FirebaseAuth.instance;
 
-    firestore.collection('users').doc(firestoreAuth.currentUser?.uid).collection("collectionPath").add({
+    firestore.collection('users').doc(firestoreAuth.currentUser?.uid).set({
+      'uid':firestoreAuth.currentUser?.uid,
       'name': _nameController.text,
       'dateOfBirth': _dobController.text,
       'gender': _selectedGender,
