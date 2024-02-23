@@ -63,7 +63,7 @@ class _OtpGetState extends State<OtpGet> {
       }
     } catch (e) {
       setState(() {
-         loading = false;
+        loading = false;
       });
 
     }
@@ -82,7 +82,7 @@ class _OtpGetState extends State<OtpGet> {
             children: [
               Center(
                 child: Image.asset("assets/otp.png",
-                height: 180,
+                  height: 180,
                 ),
               ),
               SizedBox(height: 20,),
@@ -100,19 +100,19 @@ class _OtpGetState extends State<OtpGet> {
               SizedBox(
                 height: 22,
               ),
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: Pinput(
-              controller: otpController,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            length: 6,
-              // validator: (s) {
-              //   return s == correctOTP ? null : 'incorrect pin';
-              // },
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15),
+                child: Pinput(
+                  controller: otpController,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  length: 6,
+                  // validator: (s) {
+                  //   return s == correctOTP ? null : 'incorrect pin';
+                  // },
 
-            ),
-          ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),

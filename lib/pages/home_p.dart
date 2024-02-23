@@ -156,9 +156,11 @@ class _HomePState extends State<HomeP> {
                                   },
                                   child: Image.network(
                                     snapshots.data!.docs[index]['image_url'],
+                                    fit: BoxFit.fill,
+                                    // ,
                                     width: 100,
                                     height: 80,
-                                    fit: BoxFit.fill,
+
                                   ),
                                 ),
                               ),

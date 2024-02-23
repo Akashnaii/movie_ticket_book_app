@@ -82,19 +82,19 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 width: 300,
                 child: errorText.isNotEmpty
                     ? Center(
-                      child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                  child: Text(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                    child: Text(
                       errorText,
                       style: TextStyle(color: Colors.red),
+                    ),
                   ),
-                ),
-                    )
+                )
                     : Container(),
               ),
-        SizedBox(
-            height: 10,
-          ),
+              SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 height: 45,
                 width: 275,
