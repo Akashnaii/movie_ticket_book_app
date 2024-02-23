@@ -15,6 +15,7 @@ class HomeP extends StatefulWidget {
 
 class _HomePState extends State<HomeP> {
   int _selectedIndex = 0;
+  int _previousIndex = 0;
   final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
   final concert = FirebaseFirestore.instance.collection('Concert').snapshots();
   final standupcomedy = FirebaseFirestore.instance.collection('Standup commedy').snapshots();
@@ -39,6 +40,7 @@ class _HomePState extends State<HomeP> {
             ),
           ),
           body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(
@@ -168,9 +170,9 @@ class _HomePState extends State<HomeP> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Row(
+                    child:const Row(
                       children: [
-                        const Text(
+                         Text(
                           'Concert',
                           style: TextStyle(
                             fontSize: 18,
@@ -220,7 +222,7 @@ class _HomePState extends State<HomeP> {
                                     Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(snapshot: snapshots.data!.docs[index])));
                                   },
                                   child: Image.network(
-                                    snapshots.data!.docs[index]['image_url'],
+                                    snapshots.data?.docs[index]['image_url'],
                                     width: 100,
                                     height: 80,
                                     fit: BoxFit.fill,
@@ -323,29 +325,42 @@ class _HomePState extends State<HomeP> {
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey,
             onTap: (int index) {
-              switch (index) {
-                case 0:
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeP()));
-                  break;
+              if (index != _selectedIndex) {
+                if (index == _previousIndex) {
+                  Navigator.pop(context);
+                }
 
-                case 1:
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => BookingHistory(
+                switch (index) {
+                  case 0:
+                    Navigator.push(context,
+                        CupertinoPageRoute(builder: (context) => HomeP()));
+                    break;
 
+                  case 1:
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) =>
+                            BookingHistory(
+
+                            ),
                       ),
-                    ),
-                  );
-                  break;
-                case 2:
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => SettingScreen()));
-                  break;
+                    );
+                    break;
+                  case 2:
+                    Navigator.push(context, CupertinoPageRoute(
+                        builder: (context) => SettingScreen()));
+                    break;
+                }
               }
-              setState(() {
-                _selectedIndex = index;
-              });
+              else {
+                setState(() {
+                  _selectedIndex = index;
+                  _previousIndex = index;
+                });
+              }
             },
           ),
         ),

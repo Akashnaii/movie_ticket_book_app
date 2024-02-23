@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +44,15 @@ class _OtpGetState extends State<OtpGet> {
         setState(() {
           loading = false;
         });
-        // The OTP is valid, navigate to the main app screen or perform further actions
-        // Navigator.pushNamed(context, Routes.Home_p);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isloggedIn', true);
+        final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(authResult.user?.uid).get();
+        debugPrint("userSnapshot.exists:${userSnapshot.exists}");
+        if(userSnapshot.exists){
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const HomeP()));
+        }else{
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
+        }
       } else {
         // The OTP is invalid
         setState(() {
@@ -60,6 +68,7 @@ class _OtpGetState extends State<OtpGet> {
 
     }
   }
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +122,6 @@ class _OtpGetState extends State<OtpGet> {
                 child: ElevatedButton(
                   onPressed: () async{
                     _verifyOtp();
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('isloggedIn', true);
-                   Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
-
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -253,12 +253,15 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                           style: TextStyle(fontSize: 18),
                         ),
                         onPressed: () {
+                          debugPrint("widget.theaterName:${widget.theaterName}");
                           if (_formKey.currentState!.validate()) {
                             Navigator.push(
                                 context,
                                 CupertinoPageRoute(
                                     builder: (context) =>
                                         TransactionSuccessful(
+                                          theaterName: widget.theaterName,
+                                          showtime: widget.showtime,
                                           selectedSeats: widget.selectedSeats,
                                           totalPrice: widget.totalPrice,
                                           movieName: widget.movieName,

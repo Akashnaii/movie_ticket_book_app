@@ -52,7 +52,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
         ),
       );
       // Navigate to the HomeP page only after successful form submission
-      Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> HomeP()));
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

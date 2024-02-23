@@ -48,6 +48,7 @@ class _BookingHistoryState extends State<BookingHistory> {
 
           return  ListView.builder(
               itemCount: snapshot.data!.docs.length,
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context , index){
                 return ListTile(
                     leading: CircleAvatar(
@@ -62,6 +63,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
+                            scrollable: true,
                             title: Text('Booking Details'),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
@@ -74,19 +76,33 @@ class _BookingHistoryState extends State<BookingHistory> {
                                     height: 200,
                                   ),
                                 ),
-                                SizedBox(height: 5),
-                                // Divider(thickness: 2, color: Colors.black),
-                                Text(snapshot.data!.docs[index]['name'].toString()),
-                                Divider(thickness: 2, color: Colors.black),
+                                SizedBox(height: 25),
+                                Text('Movie Name' , style: TextStyle(fontSize: 12 ,color: Colors.black , fontWeight: FontWeight.bold),),
+                                Divider(thickness: 2, color: Colors.grey),
+                                Text(snapshot.data!.docs[index]['name'].toString() ?? ''),
+                                // SizedBox(height: 5,),
+                                SizedBox(height: 15,),
+                                Text('Selected Date' , style: TextStyle(fontSize: 12 , color: Colors.black , fontWeight: FontWeight.bold),),
+                                Divider(thickness: 2, color: Colors.grey),
+
                                 Text(snapshot.data!.docs[index]['selectedDate'].toString()),
-                                Divider(thickness: 2, color: Colors.black),
+                                SizedBox(height: 15,),
+                                Text('Selected Seats' , style: TextStyle(fontSize: 12 , color: Colors.black , fontWeight: FontWeight.bold),),
+                                Divider(thickness: 2, color: Colors.grey),
+
                                 Text(snapshot.data!.docs[index]['selectedSeats'].toString()),
-                                Divider(thickness: 2, color: Colors.black),
+                                SizedBox(height: 15,),
+                                Text('Selected Time' , style: TextStyle(fontSize: 12 , color: Colors.black , fontWeight: FontWeight.bold),),
+                                Divider(thickness: 2, color: Colors.grey),
+
                                 Text(snapshot.data!.docs[index]['showtime'].toString()),
-                                Divider(thickness: 2, color: Colors.black),
+
+                                SizedBox(height: 15,),
+                                Text('Theater Name' , style: TextStyle(fontSize: 12 , color: Colors.black , fontWeight: FontWeight.bold),),
+                                Divider(thickness: 2, color: Colors.grey),
                                 Wrap(
                                   children: [
-                                    Text(widget.theaterName.toString()),
+                                    Text(snapshot.data?.docs[index]['theaterName'] ??''),
                                   ],
                                 )
                               ],

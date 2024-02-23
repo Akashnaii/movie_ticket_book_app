@@ -209,79 +209,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               SizedBox(height: 25),
               InkWell(
-onTap: ()
-                {
-                  setState(() {
-                    userDetail = !userDetail;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "User Profile",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              if (userDetail)
-                StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
-                      .collection("collectionPath")
-                      .snapshots(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error: ${snapshot.error}'),
-                      );
-                    }
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return Center(
-                        child: Text('No data available.'),
-                      );
-                    }
-                    var userData = snapshot.data!.docs.first;
-                    return AlertDialog(
-                      title: Text(''),
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('Name: ${userData['name']}'),
-                          SizedBox(height: 10),
-                          Text('Date of Birth: ${userData['dateOfBirth']}'),
-                          SizedBox(height: 10),
-                          Text('Gender: ${userData['gender']}'),
-                        ],
-                      ),
-                      actions : <Widget>[
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingScreen()));
-                          },
-                          child: Text('Close'),
-                        ),
-                      ]
-                    );
-                  },
-                ),
-
-              SizedBox(height: 25),
-              InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PrivacyPolicy()),
+                    CupertinoPageRoute(builder: (context) => PrivacyPolicy()),
                   );
                 },
                 child: Padding(
@@ -301,9 +232,9 @@ onTap: ()
                 onTap: () {
                   Navigator.push(context, CupertinoPageRoute(builder: (context)=> termsandcondition()));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
+                child: const Padding(
+                  padding:  EdgeInsets.only(left: 15),
+                  child:  Text(
                     "Terms and Condition",
                     style: TextStyle(
                       color: Colors.black,
@@ -316,6 +247,7 @@ onTap: ()
               SizedBox(height: 25),
               InkWell(
                 onTap: () {
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> aboutus()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),

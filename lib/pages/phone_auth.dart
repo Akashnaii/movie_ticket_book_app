@@ -130,17 +130,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
                               this.verificationId = verificationId;
                             });
 
-                            // Navigate to the OTP screen only once
-                            // Navigator.pushNamed(context, Routes.Home_p);
-
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => OtpGet(
-                            //       verificationId: verificationId,
-                            //     ),
-                            //   ),
-                            // );
                             Navigator.push(context, CupertinoPageRoute(builder: (context) => OtpGet(verificationId: verificationId)));
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {
