@@ -6,6 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moviemate/pages/home_p.dart';
 
+import 'booking_history.dart';
+
 class TransactionSuccessful extends StatefulWidget {
   final String? theaterName;
   final String? showtime;
@@ -90,9 +92,43 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
             const SizedBox(height: 310),
             ElevatedButton(
               onPressed: () {
-                addHistory();
-                // Navigator.push(
-                //     context, CupertinoPageRoute(builder: (context) => const HomeP()));
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context)
+                {
+                  return AlertDialog(
+
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Success Ticket'),
+                        IconButton(
+                          icon: Icon(Icons.cancel),
+                          onPressed: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+                          },
+                        ),
+                      ],
+                    ),
+                  actions: <Widget>[
+                    Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4hj6I3EfPkE8Jy5_o8zbjFaiOVeHFXGpIrw&usqp=CAU"),
+                    SizedBox(height: 15,),
+                    Text("Do you want to see your booked ticket?",
+                      style: TextStyle(fontStyle: FontStyle.italic),),
+                    SizedBox(height: 15,),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(context, CupertinoPageRoute(builder: (context)=> BookingHistory()));
+                          addHistory();
+                        },
+                        child:
+                        Center(child: Text('View Details')),
+                      ),
+                    ],
+                  );
+                },
+                );
               },
               style: ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
@@ -115,3 +151,5 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
     );
   }
 }
+
+

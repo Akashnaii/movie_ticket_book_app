@@ -1,11 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/Creditcard.dart';
+import 'package:moviemate/pages/phone_auth.dart';
+import 'package:moviemate/pages/registration.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/transaction_succes.dart';
-
 import 'package:moviemate/pages/theater.dart';
 import 'Navigationbar/Settingscreen.dart';
 import 'pages/fetchuser.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  const MaterialApp(
-      home: SeatSelection(movieName: 'name', imageUrl: 'image_url', selectedDate: '',),
+      home: SplashScreen(),
     );
   }
 }

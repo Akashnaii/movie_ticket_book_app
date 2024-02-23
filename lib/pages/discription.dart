@@ -36,8 +36,10 @@ class _DescriptionPageState extends State<DescriptionPage> {
               height: 350,
               width: double.infinity,
               child: Image.network(
-               widget.snapshot['image_url'],
+             widget.snapshot['image_url'],
                 fit: BoxFit.fill,
+               //
+
               ),
             ),
             const SizedBox(height: 10),

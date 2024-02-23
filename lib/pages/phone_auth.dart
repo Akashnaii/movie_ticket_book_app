@@ -82,19 +82,19 @@ class _PhoneAuthState extends State<PhoneAuth> {
                 width: 300,
                 child: errorText.isNotEmpty
                     ? Center(
-                      child: Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                  child: Text(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                    child: Text(
                       errorText,
                       style: TextStyle(color: Colors.red),
+                    ),
                   ),
-                ),
-                    )
+                )
                     : Container(),
               ),
-        SizedBox(
-            height: 10,
-          ),
+              SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 height: 45,
                 width: 275,
@@ -130,17 +130,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
                               this.verificationId = verificationId;
                             });
 
-                            // Navigate to the OTP screen only once
-                            // Navigator.pushNamed(context, Routes.Home_p);
-
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => OtpGet(
-                            //       verificationId: verificationId,
-                            //     ),
-                            //   ),
-                            // );
                             Navigator.push(context, CupertinoPageRoute(builder: (context) => OtpGet(verificationId: verificationId)));
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {

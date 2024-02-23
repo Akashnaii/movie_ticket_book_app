@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/registration.dart';
 import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class OtpGet extends StatefulWidget {
@@ -42,8 +44,15 @@ class _OtpGetState extends State<OtpGet> {
         setState(() {
           loading = false;
         });
-        // The OTP is valid, navigate to the main app screen or perform further actions
-        // Navigator.pushNamed(context, Routes.Home_p);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isloggedIn', true);
+        final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(authResult.user?.uid).get();
+        debugPrint("userSnapshot.exists:${userSnapshot.exists}");
+        if(userSnapshot.exists){
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const HomeP()));
+        }else{
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
+        }
       } else {
         // The OTP is invalid
         setState(() {
@@ -54,11 +63,12 @@ class _OtpGetState extends State<OtpGet> {
       }
     } catch (e) {
       setState(() {
-         loading = false;
+        loading = false;
       });
 
     }
   }
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +82,7 @@ class _OtpGetState extends State<OtpGet> {
             children: [
               Center(
                 child: Image.asset("assets/otp.png",
-                height: 180,
+                  height: 180,
                 ),
               ),
               SizedBox(height: 20,),
@@ -90,19 +100,19 @@ class _OtpGetState extends State<OtpGet> {
               SizedBox(
                 height: 22,
               ),
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: Pinput(
-              controller: otpController,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            length: 6,
-              // validator: (s) {
-              //   return s == correctOTP ? null : 'incorrect pin';
-              // },
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15),
+                child: Pinput(
+                  controller: otpController,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  length: 6,
+                  // validator: (s) {
+                  //   return s == correctOTP ? null : 'incorrect pin';
+                  // },
 
-            ),
-          ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -110,10 +120,8 @@ class _OtpGetState extends State<OtpGet> {
                 height: 40,
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
                     _verifyOtp();
-                   Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
-
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -131,8 +139,8 @@ class _OtpGetState extends State<OtpGet> {
                 ),
               ),
               TextButton(
-                  onPressed: () {
-                   // Navigator.pushNamed(context, Routes.phoneScreen);
+                  onPressed: () async{
+                    // Navigator.pushNamed(context, Routes.phoneScreen);
                     Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
                   },
                   child: Text(
