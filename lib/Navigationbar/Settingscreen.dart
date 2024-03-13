@@ -79,16 +79,22 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+
+
               if (showPersonalDetailsForm)
                 Column(
                   children: [
@@ -217,16 +223,21 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Privacy Policy",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+
               SizedBox(height: 25),
               InkWell(
                 onTap: () {
@@ -234,13 +245,17 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: const Padding(
                   padding:  EdgeInsets.only(left: 15),
-                  child:  Text(
-                    "Terms and Condition",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child:  Row(
+                    children: [
+                      Text(
+                        "Terms and Condition",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -251,13 +266,17 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "About Us",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "About Us",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

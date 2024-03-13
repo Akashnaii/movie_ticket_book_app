@@ -34,36 +34,21 @@ class TransactionSuccessful extends StatefulWidget {
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
 
-  Future<void> addHistory() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    FirebaseAuth firestoreAuth = FirebaseAuth.instance;
+Future<void> addbookinghistories() async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth firestoreAuth = FirebaseAuth.instance;
 
-    firestore.collection('users').doc(firestoreAuth.currentUser?.uid).collection("BookingHistory").add({
-      'image_url' : widget.imageUrl,
-      'name': widget.movieName,
-      'theaterName': widget.theaterName,
-      'showtime': widget.showtime,
-      'selectedSeats': widget.selectedSeats,
-      'totalPrice': widget.totalPrice,
-      'selectedDate': widget.selectedDate,
-    }).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Booking History Add Successfully'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      // Navigate to the HomeP page only after successful form submission
-      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context)=> HomeP()));
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to add user data: $error'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    });
+  firestore.collection('AllBookingHistories').add({
+    'image_url' : widget.imageUrl,
+    'name': widget.movieName,
+    'theaterName': widget.theaterName,
+    'showtime': widget.showtime,
+    'selectedSeats': widget.selectedSeats,
+    'totalPrice': widget.totalPrice,
+    'selectedDate': widget.selectedDate,
+  });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +80,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (BuildContext context)
+                  builder: (BuildContext context2)
                 {
                   return AlertDialog(
 
@@ -106,7 +91,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                         IconButton(
                           icon: Icon(Icons.cancel),
                           onPressed: (){
-                            Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+                            Navigator.push(context2, CupertinoPageRoute(builder: (context)=> HomeP()));
                           },
                         ),
                       ],
@@ -119,8 +104,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                     SizedBox(height: 15,),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(context, CupertinoPageRoute(builder: (context)=> BookingHistory()));
-                          addHistory();
+                          Navigator.push(context2, CupertinoPageRoute(builder: (context)=> BookingHistory()));
                         },
                         child:
                         Center(child: Text('View Details')),
@@ -139,7 +123,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                 style:  TextStyle(
                     fontStyle: FontStyle.normal,
                     fontSize: 20,
-                    color: Colors.deepPurple),
+                    color: Colors.white),
               ),
             ),
             const SizedBox(

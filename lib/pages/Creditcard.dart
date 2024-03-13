@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:moviemate/pages/transaction_succes.dart';
 import 'Input_information.dart';
+import 'home_p.dart';
 
 class CreditCardScreen extends StatefulWidget {
   final String? theaterName;
@@ -104,7 +107,33 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
           DateFormat('MM/yyyy').format(startDate ?? DateTime.now()).toString();
     });
   }
+  Future<void> addHistory() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    FirebaseAuth firestoreAuth = FirebaseAuth.instance;
 
+    firestore.collection('users').doc(firestoreAuth.currentUser?.uid).collection("BookingHistory").add({
+      'image_url' : widget.imageUrl,
+      'name': widget.movieName,
+      'theaterName': widget.theaterName,
+      'showtime': widget.showtime,
+      'selectedSeats': widget.selectedSeats,
+      'totalPrice': widget.totalPrice,
+      'selectedDate': widget.selectedDate,
+    }).then((value) {
+      Navigator.push(
+          context,
+          CupertinoPageRoute(
+              builder: (context) =>
+                  TransactionSuccessful(
+                    theaterName: widget.theaterName,
+                    showtime: widget.showtime,
+                    selectedSeats: widget.selectedSeats,
+                    totalPrice: widget.totalPrice,
+                    movieName: widget.movieName,
+                    imageUrl: widget.imageUrl,
+                    selectedDate: widget.selectedDate,)));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,23 +279,12 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                       child: ElevatedButton(
                         child: Text(
                           "Submit",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 18 , color: Colors.white),
                         ),
                         onPressed: () {
                           debugPrint("widget.theaterName:${widget.theaterName}");
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) =>
-                                        TransactionSuccessful(
-                                          theaterName: widget.theaterName,
-                                          showtime: widget.showtime,
-                                          selectedSeats: widget.selectedSeats,
-                                          totalPrice: widget.totalPrice,
-                                          movieName: widget.movieName,
-                                          imageUrl: widget.imageUrl,
-                                          selectedDate: widget.selectedDate,)));
+                           addHistory();
                           }
                           else
                           {

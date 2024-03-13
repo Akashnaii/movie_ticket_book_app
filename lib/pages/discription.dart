@@ -22,7 +22,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
   @override
   void initState() {
     super.initState();
-    rating = widget.snapshot['rating'] ?? 0.0;
+    rating = double.tryParse(widget.snapshot['rating'].toString()) ?? 0.0;
   }
 
   @override
@@ -180,7 +180,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
               child: const Text(
                 'Book Ticket',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20 , color: Colors.white),
               ),
             ),
           ),
