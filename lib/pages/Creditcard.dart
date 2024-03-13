@@ -150,7 +150,13 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                         ],
                         decoration: InputDecoration(
                           hintText: "Card Number",
-                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                         // border: OutlineInputBorder(),
                           prefixIcon: Icon(Icons.credit_card),
                           errorText: cardNumberError,
                         ),
@@ -169,8 +175,14 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                         ],
                         decoration: InputDecoration(
                           hintText: "Full Name",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
                           prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
+                          //border: OutlineInputBorder(),
                           errorText: fullNameError,
                         ),
                         validator: validateFullName,
@@ -193,7 +205,13 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                                   ],
                                   decoration: InputDecoration(
                                     hintText: "CVV",
-                                    border: OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                                   // border: OutlineInputBorder(),
                                     prefixIcon: Icon(Icons.lock),
                                     errorText: cvvError,
                                   ),
@@ -226,7 +244,13 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                                 hintText: startDate != null
                                     ? "${startDate?.month}/${startDate?.year}"
                                     : "MM/YYYY",
-                                border: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                               // border: OutlineInputBorder(),
                                 prefixIcon: Icon(Icons.calendar_month),
                                 errorText: expiryDateError,
                               ),
@@ -247,10 +271,21 @@ class _CreditCardScreenstate extends State<CreditCardScreen> {
                     child: Container(
                       width: 150,
                       height: 50,
+
                       child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                            fixedSize: MaterialStateProperty.all<Size>(
+                              Size(280, 55),
+                            ),
+                          ),
                         child: Text(
                           "Submit",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                          ),
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {

@@ -54,6 +54,12 @@ class _registration_pState extends State<registration_p> {
                   decoration: InputDecoration(
                     filled: true,
                     hintText: 'Name',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     errorText: _nameError,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -74,6 +80,12 @@ class _registration_pState extends State<registration_p> {
                       decoration: InputDecoration(
                         filled: true,
                         hintText: 'Date of Birth',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
                         errorText: _dobError,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),

@@ -138,14 +138,21 @@ class _DescriptionPageState extends State<DescriptionPage> {
                     imageUrl: widget.snapshot['image_url'],
                   )));
                 },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                  fixedSize: MaterialStateProperty.all<Size>(
+                    Size(280, 55),
+                  ),
                 ),
                 child:  const Padding(
                   padding:  EdgeInsets.symmetric(horizontal: 60),
                   child: Text(
                     'Book Ticket',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                      fontStyle: FontStyle.normal,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

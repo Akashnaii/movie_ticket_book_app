@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:moviemate/pages/Creditcard.dart';
+import 'package:moviemate/pages/discription.dart';
+import 'package:moviemate/pages/dropdownlist.dart';
 import 'package:moviemate/pages/phone_auth.dart';
+import 'package:moviemate/pages/rating-set.dart';
 import 'package:moviemate/pages/registration.dart';
 import 'package:moviemate/pages/seat_selection.dart';
 import 'package:moviemate/pages/spalsh_Screen.dart';
@@ -27,7 +30,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return  const MaterialApp(
-      home: SplashScreen(),
+      home: HomeP(),
     );
   }
 }
+//movieName: '', imageUrl: '', selectedDate: '',

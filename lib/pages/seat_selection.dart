@@ -206,6 +206,7 @@ class _SeatSelectionState extends State<SeatSelection> {
                 },
                 child: Text(
                   'Pay - \₹ ${snapshot.data?.toStringAsFixed(2) ?? "0.00"}',
+                  style: TextStyle(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
@@ -360,10 +361,9 @@ class _SeatSelectionState extends State<SeatSelection> {
         style: TextStyle(
           color: isSelected ? Colors.white : Colors.black,
         ),
-      ),
+      )
     );
   }
-
   void toggleSeatSelection(int row, int column, List<List<bool>> selectedSeats,
       BuildContext context) {
     setState(() {
@@ -371,12 +371,7 @@ class _SeatSelectionState extends State<SeatSelection> {
         selectedSeats[row][column] = false;
       } else {
         if (getSelectedSeats().length < 10) {
-          selectedSeats[row][column] = !selectedSeats[row][column];
-
-          // Calculate total price and update the stream
-          List<String> selectedSeatNumbers = getSelectedSeats();
-          double total = calculateTotalPrice(selectedSeatNumbers);
-          totalPriceController.add(total);
+          selectedSeats[row][column] = true;
         } else {
           // Show a message using a dialog box to notify the user that the limit is reached
           showDialog(
@@ -398,6 +393,11 @@ class _SeatSelectionState extends State<SeatSelection> {
           );
         }
       }
+
+      // Calculate total price and update the stream
+      List<String> selectedSeatNumbers = getSelectedSeats();
+      double total = calculateTotalPrice(selectedSeatNumbers);
+      totalPriceController.add(total);
     });
   }
 
