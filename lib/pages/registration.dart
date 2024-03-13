@@ -136,7 +136,7 @@ class _registration_pState extends State<registration_p> {
                 child: ElevatedButton(
                   onPressed: () async{
                     _validateFields();
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeScreen()));
                     },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.black,
@@ -216,7 +216,7 @@ class _registration_pState extends State<registration_p> {
         ),
       );
       // Navigate to the HomeP page only after successful form submission
-      Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
+      Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeScreen()));
     })
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(

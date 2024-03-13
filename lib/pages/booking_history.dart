@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviemate/pages/home_p.dart';
 
 class BookingHistory extends StatefulWidget {
   final String? theaterName;
@@ -32,7 +34,7 @@ class _BookingHistoryState extends State<BookingHistory> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back , color: Colors.black),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
           },
         ),
         ),

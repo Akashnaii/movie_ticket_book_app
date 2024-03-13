@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Check if the user is already logged in
       if (isloggedIn ?? false) {
         Navigator.pushReplacement(
-            context, CupertinoPageRoute(builder: (context) => HomeP()));
+            context, CupertinoPageRoute(builder: (context) => HomeScreen()));
       } else {
         Navigator.pushReplacement(
             context, CupertinoPageRoute(builder: (context) => PhoneAuth()));

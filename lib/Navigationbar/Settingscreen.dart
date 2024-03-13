@@ -5,6 +5,7 @@ import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moviemate/Navigationbar/privacy_policy.dart';
+import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Terms_Condition.dart';
@@ -62,7 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              Navigator.pop(context); // Perform Navigator.pop operation
+              Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
             },
           ),
         ),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     // TODO: implement build
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeP(),
+      home: SplashScreen(),
     );
   }
 }

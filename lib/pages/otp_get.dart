@@ -49,7 +49,7 @@ class _OtpGetState extends State<OtpGet> {
         final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(authResult.user?.uid).get();
         debugPrint("userSnapshot.exists:${userSnapshot.exists}");
         if(userSnapshot.exists){
-          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const HomeP()));
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const HomeScreen()));
         }else{
           Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
         }
