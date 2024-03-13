@@ -350,11 +350,15 @@ class _HomePState extends State<HomeP> {
               currentIndex: _selectedIndex,
               selectedItemColor: Colors.black,
               onTap: (int index) {
+                if (index != _selectedIndex){
+                  if (index != _previousIndex){
+                    Navigator.pop(context);
+                  }
                 switch (index) {
                   case 0:
                     Navigator.push(context, CupertinoPageRoute(builder: (context) => HomeP()));
                     break;
-      
+
                   case 1:
                     Navigator.push(
                       context,
@@ -368,18 +372,19 @@ class _HomePState extends State<HomeP> {
                         builder: (context) => SettingScreen()));
                     break;
                 }
+                }
+                else {
+                  setState(() {
+                    _selectedIndex = index;
+                    _previousIndex = index;
+                  });
+                }
               }
-              else {
-                setState(() {
-                  _selectedIndex = index;
-                  _previousIndex = index;
-                });
-              }
-            },
+           ),
           ),
         ),
       ),
-    );
+  );
   }
 }
 

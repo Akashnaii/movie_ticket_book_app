@@ -5,7 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:moviemate/pages/theater.dart';
 
 class DescriptionPage extends StatefulWidget {
-final QueryDocumentSnapshot snapshot;
+  final QueryDocumentSnapshot snapshot;
 
 
 
@@ -65,7 +65,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                 widget.snapshot['name'],
+                  widget.snapshot['name'],
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -138,8 +138,8 @@ class _DescriptionPageState extends State<DescriptionPage> {
                           Container(
                             width: 70,
                             child: Text(
-                             widget.snapshot['Cast'][index]['cast_name'],
-                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                              widget.snapshot['Cast'][index]['cast_name'],
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -149,45 +149,40 @@ class _DescriptionPageState extends State<DescriptionPage> {
                   ),
                 ),
               ),
-            ),
-            const Spacer(),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> Theater(
-                    movieName: widget.snapshot['name'],
-                    imageUrl: widget.snapshot['image_url'],
-                  )));
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                  fixedSize: MaterialStateProperty.all<Size>(
-                    Size(280, 55),
-                  ),
-                ),
-                child:  const Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 60),
-                  child: Text(
-                    'Book Ticket',
-                    style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontSize: 20,
-                      color: Colors.white,
+              // const Spacer(),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          child: Container(
+           // padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => Theater(
+                      movieName: widget.snapshot['name'],
+                      imageUrl: widget.snapshot['image_url'],
                     ),
                   ),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Background color
-                onPrimary: Colors.black, // Text color
-                padding: EdgeInsets.symmetric(vertical: 15,),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                fixedSize: MaterialStateProperty.all<Size>(
+                Size (185, 55),
                 ),
               ),
-              child: const Text(
-                'Book Ticket',
-                style: TextStyle(fontSize: 20 , color: Colors.white),
+              child: Text(
+                "Book Ticket",
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
