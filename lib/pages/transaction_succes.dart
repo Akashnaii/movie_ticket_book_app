@@ -115,15 +115,18 @@ Future<void> addbookinghistories() async {
                 );
               },
               style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all<Size>(
-                const Size(185, 55),
-              )),
-              child: const Text(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  Size(165, 55),
+                ),
+              ),
+              child: Text(
                 "Done",
-                style:  TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontSize: 20,
-                    color: Colors.white),
+                style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
             ),
             const SizedBox(
