@@ -22,108 +22,129 @@ class _DescriptionPageState extends State<DescriptionPage> {
   @override
   void initState() {
     super.initState();
-    rating = widget.snapshot['rating'] ?? 0.0;
+    rating = double.tryParse(widget.snapshot['rating'].toString()) ?? 0.0;
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 350,
-              width: double.infinity,
-              child: Image.network(
-             widget.snapshot['image_url'],
-                fit: BoxFit.fill,
-               //
-
-              ),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back , color: Colors.black,),
+          ),
+          centerTitle: true,
+          elevation: 2,
+          backgroundColor: Colors.white,
+          title: const Text(
+            'Description',
+            style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-               widget.snapshot['name'],
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                widget.snapshot!['description'],
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 350,
+                width: MediaQuery.of(context).size.width,
+                child:
+                Image.network(
+                  widget.snapshot['image_url'],
+                  fit: BoxFit.fill,
                 ),
-                textAlign: TextAlign.left,
               ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: RatingBar.builder(
-                initialRating: rating,
-                ignoreGestures: true,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 30.0,
-                itemBuilder: (context, index) {
-                  if (rating == index + 0.5) {
-                    return const Icon(
-                      Icons.star_half,
-                      color: Colors.amber,
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                 widget.snapshot['name'],
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  widget.snapshot!['description'],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: RatingBar.builder(
+                  initialRating: rating,
+                  ignoreGestures: true,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 30.0,
+                  itemBuilder: (context, index) {
+                    if (rating == index + 0.5) {
+                      return const Icon(
+                        Icons.star_half,
+                        color: Colors.amber,
+                      );
+                    }
+                    return Icon(
+                      Icons.star,
+                      color: rating >= index + 1 ? Colors.amber : Colors.grey[300],
                     );
-                  }
-                  return Icon(
-                    Icons.star,
-                    color: rating >= index + 1 ? Colors.amber : Colors.grey[300],
-                  );
-                },
-                onRatingUpdate: (newRating) {
-                  setState(() {
-                    // rating = newRating;
-                  });
-                },
+                  },
+                  onRatingUpdate: (newRating) {
+                    setState(() {
+                      // rating = newRating;
+                    });
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                'Cast',
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Cast',
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(
-                  widget.snapshot['Cast'].length,
-                      (index) => Padding(
-                    padding: const EdgeInsets.all(11),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 32,
-                          backgroundImage: NetworkImage(widget.snapshot['Cast'][index]['cast_image']),
-                        ),
-                        SizedBox(height: 6),
-                        Container(
-                          width: 70,
-                          child: Text(
-                           widget.snapshot['Cast'][index]['cast_name'],
-                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
+              const SizedBox(height: 4),
+              SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    widget.snapshot['Cast'].length,
+                        (index) => Padding(
+                      padding: const EdgeInsets.all(11),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 32,
+                            backgroundImage: NetworkImage(widget.snapshot['Cast'][index]['cast_image']),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 6),
+                          Container(
+                            width: 70,
+                            child: Text(
+                             widget.snapshot['Cast'][index]['cast_name'],
+                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -154,11 +175,22 @@ class _DescriptionPageState extends State<DescriptionPage> {
                       color: Colors.white,
                     ),
                   ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Background color
+                onPrimary: Colors.black, // Text color
+                padding: EdgeInsets.symmetric(vertical: 15,),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text(
+                'Book Ticket',
+                style: TextStyle(fontSize: 20 , color: Colors.white),
+              ),
             ),
-            const SizedBox(height: 10),
-          ],
+          ),
         ),
       ),
     );

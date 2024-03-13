@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'Creditcard.dart';
 
@@ -81,6 +83,43 @@ class _SeatSelectionState extends State<SeatSelection> {
   void dispose() {
     totalPriceController.close();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSeatsDetails();
+  }
+  List<String> setAllSeats = [];
+    Future<void> getSeatsDetails() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection('AllBookingHistories').get();
+    for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot in querySnapshot.docs){
+      String theaterName = documentSnapshot['theaterName'];
+      String showtime = documentSnapshot['showtime'];
+      String movieName = documentSnapshot['name'];
+      String selectedDate = documentSnapshot['selectedDate'];
+      List<String> selectedSeats = List<String>.from(documentSnapshot['selectedSeats']);
+
+      DateTime dateFrom = DateTime.parse(widget.selectedDate);
+      DateTime dateFrom2 = DateTime.parse(selectedDate);
+
+      String date = DateFormat("dd/MM/yyyy").format(dateFrom);
+      String secondDate = DateFormat("dd/MM/yyyy").format(dateFrom2);
+
+      // debugPrint("selectedDate :${secondDate} -- widget.selectedDate:${date}");
+
+      if(theaterName == widget.theaterName &&
+          showtime == widget.showtime &&
+          movieName == widget.movieName &&
+          date == secondDate){
+        setAllSeats.addAll(selectedSeats);
+
+      }
+
+    }
+    // debugPrint("setAllSeats:${setAllSeats}");
   }
 
   @override
@@ -346,20 +385,24 @@ class _SeatSelectionState extends State<SeatSelection> {
   }
 
   Widget buildSeatContainer(bool isSelected, int row, int column) {
+    String seatIdentifier = '${String.fromCharCode(row + 65)}${column + 1}';
+    bool isBooked = setAllSeats.contains(seatIdentifier);
+    Color seatColor = isBooked ? Colors.red : isSelected ? Colors.green : Colors.grey;
+
     return Container(
       width: 30,
       height: 30,
       alignment: Alignment.center,
       margin: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.green : Colors.grey,
+        color: seatColor,
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         '${String.fromCharCode(row + 65)}${column + 1}',
         style: TextStyle(
-          color: isSelected ? Colors.white : Colors.black,
+          color: isBooked ? Colors.white : isSelected ? Colors.white : Colors.black,
         ),
       )
     );

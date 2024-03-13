@@ -1,9 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moviemate/Navigationbar/privacy_policy.dart';
+import 'package:moviemate/pages/phone_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Terms_Condition.dart';
 import 'aboutus.dart';
 
@@ -18,9 +21,28 @@ class _SettingScreenState extends State<SettingScreen> {
   final format = DateFormat("yyyy-MM-dd");
   String? _selectedGender;
   TextEditingController nameController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   DateTime? _selectedDOB;
   bool showPersonalDetailsForm = false;
+  bool userDetail = false;
+  // String? userName;
+  // String? userDate;
+  // String? userGender;
+  @override
+  void initState() {
+    super.initState();
+    getUserDetails();
+  }
+  Future<void> getUserDetails()async{
+    DocumentSnapshot<Map<String, dynamic>> userDetails =await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).get();
 
+     setState(() {
+       nameController.text = userDetails['name'];
+       _selectedGender = userDetails['gender'];
+       dateController.text = userDetails['dateOfBirth'];
+     });
+
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,202 +79,204 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Edit Profile",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+
+
               if (showPersonalDetailsForm)
-                StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser?.uid)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return CircularProgressIndicator();
-                    }
-
-                    if (snapshot.hasData && snapshot.data!.exists) {
-                      var userData =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                      nameController.text = userData['name'];
-                      _selectedGender = userData['gender'];
-                      _selectedDOB = userData['dateOfBirth'].toDate();
-                    }
-
-                    return Column(
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: TextFormField(
+                        controller: nameController,
+                        decoration: InputDecoration(labelText: 'Name'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 295),
+                      child: Text(
+                        "Gender",
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ),
+                    Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: TextFormField(
-                            controller: nameController,
-                            decoration: InputDecoration(labelText: 'Name'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your name';
-                              }
-                              return null;
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _selectedGender = 'Male';
+                              });
                             },
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 295),
-                          child: Text(
-                            "Gender",
-                            style:
-                            TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedGender = 'Male';
-                                  });
-                                },
-                                child: RadioListTile(
-                                  title: const Text('Male'),
-                                  value: 'Male',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedGender = 'Female';
-                                  });
-                                },
-                                child: RadioListTile(
-                                  title: const Text('Female'),
-                                  value: 'Female',
-                                  groupValue: _selectedGender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedGender = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 260),
-                          child: Text(
-                            'Date of Birth',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
+                            child: RadioListTile(
+                              title: const Text('Male'),
+                              value: 'Male',
+                              groupValue: _selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedGender = value;
+                                });
+                              },
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: DateTimeField(
-                            format: format,
-                            initialValue: _selectedDOB ?? DateTime.now(),
-                            decoration: InputDecoration(
-                              labelText: 'Select Date of Birth',
-                            ),
-                            onShowPicker: (context, currentValue) {
-                              return showDatePicker(
-                                context: context,
-                                firstDate: DateTime(1900),
-                                initialDate: currentValue ?? _selectedDOB ?? DateTime.now(),
-                                lastDate: DateTime.now(),
-                              );
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                _selectedGender = 'Female';
+                              });
                             },
-                          ),
-                        ),
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Implement your submit logic here
-                            },
-                            child: Text('Submit'),
+                            child: RadioListTile(
+                              title: const Text('Female'),
+                              value: 'Female',
+                              groupValue: _selectedGender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedGender = value;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ],
-                    );
-                  },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 260),
+                      child: Text(
+                        'Date of Birth',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: DateTimeField(
+                        controller: dateController,
+                        format: format,
+                        initialValue: _selectedDOB ?? DateTime.now(),
+                        decoration: InputDecoration(
+                          labelText: 'Select Date of Birth',
+                        ),
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: _selectedDOB ?? DateTime.now(),
+                            lastDate: DateTime.now(),
+                            initialDatePickerMode: DatePickerMode.day,
+                          );
+                        },
+                      ),
+
+
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () async{
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .update({
+                            'name': nameController.text,
+                            'dateOfBirth': dateController.text,
+                            'gender': _selectedGender,
+                          });
+                        },
+                        child: Text('Submit'),
+                      ),
+                    ),
+                  ],
                 ),
               SizedBox(height: 25),
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PrivacyPolicy()),
+                    CupertinoPageRoute(builder: (context) => PrivacyPolicy()),
                   );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Privacy Policy",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> termsandcondition()));
+                },
+                child: const Padding(
+                  padding:  EdgeInsets.only(left: 15),
+                  child:  Row(
+                    children: [
+                      Text(
+                        "Terms and Condition",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               SizedBox(height: 25),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => termsandcondition()),
-                  );
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> aboutus()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "Terms and Condition",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 25),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => aboutus()),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    "About Us",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "About Us",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -262,8 +286,18 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Implement logout functionality
+                      onPressed: () async{
+                        try
+                            {
+                              await FirebaseAuth.instance.signOut();
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              prefs.setBool('isloggedIn', false);
+                              Navigator.push(context, CupertinoPageRoute(builder: (context)=>PhoneAuth()));
+                            }
+                            catch(e)
+                        {
+                          Text("error for the log out : $e");
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.black),

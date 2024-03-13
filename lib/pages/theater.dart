@@ -102,8 +102,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                   }
                   return Expanded(
                     child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       itemCount: snapshots.data!.docs.length,
                       itemBuilder: (context, index) {
+                        // debugPrint("snapshots.data!.docs[index]:${snapshots.data!.docs[index]['name']}");
+                        List<dynamic> showTime = snapshots.data?.docs[index]['showtime'];
+                        String name = snapshots.data?.docs[index]['name'];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
@@ -114,6 +118,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                               color: const Color(0xFFFFFFFF),
                             ),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
@@ -199,21 +204,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                                     ),
                                   ],
                                 ),
-                                Row(
+                                Wrap(
                                   children: List.generate(
-                                    4,
+                                    showTime.length,
                                         (index) => Padding(
                                       padding: const EdgeInsets.all(5),
                                       child: InkWell(
                                         onTap: () {
+                                          debugPrint("name:${name}");
+                                          debugPrint("name12:${snapshots.data?.docs[index]['showtime'][index]}");
                                           Navigator.push(
                                             context,
                                             CupertinoPageRoute(
                                               builder: (context) => SeatSelection(
-                                                theaterName: snapshots.data!.docs[index]['name'],
-                                                showtime: '10:00 am',
+                                                theaterName: name,
+                                                showtime: snapshots.data?.docs[index]['showtime'][index] ?? '',
                                                 movieName: widget.movieName,
-                                                imageUrl: widget.imageUrl, selectedDate: '',
+                                                imageUrl: widget.imageUrl, selectedDate: _selectedDate.toString(),
                                               ),
                                             ),
                                           );
@@ -221,15 +228,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                                         child: Container(
                                           height: 30,
                                           width: 70,
+                                          alignment: Alignment.center,
                                           decoration: BoxDecoration(
                                             border: Border.all(color: Colors.black),
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: const Center(
-                                            child: Text(
-                                              '10:00 am',
-                                              style: TextStyle(color: Color(0xFF4BB33B)),
-                                            ),
+                                          child: Text(
+                                            // "123",
+                                            showTime[index],
+                                            style: TextStyle(color: Color(0xFF4BB33B)),
                                           ),
                                         ),
                                       ),

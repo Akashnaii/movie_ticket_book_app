@@ -16,6 +16,7 @@ class HomeP extends StatefulWidget {
 
 class _HomePState extends State<HomeP> {
   int _selectedIndex = 0;
+  int _previousIndex = 0;
   final firestore = FirebaseFirestore.instance.collection('movies').snapshots();
   final concert = FirebaseFirestore.instance.collection('Concert').snapshots();
   final standupcomedy = FirebaseFirestore.instance.collection('Standup commedy').snapshots();
@@ -363,14 +364,18 @@ class _HomePState extends State<HomeP> {
                     );
                     break;
                   case 2:
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => SettingScreen()));
+                    Navigator.push(context, CupertinoPageRoute(
+                        builder: (context) => SettingScreen()));
                     break;
                 }
+              }
+              else {
                 setState(() {
                   _selectedIndex = index;
+                  _previousIndex = index;
                 });
-              },
-            ),
+              }
+            },
           ),
         ),
       ),

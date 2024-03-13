@@ -140,7 +140,7 @@ class _OtpGetState extends State<OtpGet> {
               ),
               TextButton(
                   onPressed: () async{
-                    // Navigator.pushNamed(context, Routes.phoneScreen);
+                   // Navigator.pushNamed(context, Routes.phoneScreen);
                     Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
                   },
                   child: Text(
