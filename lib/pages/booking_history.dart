@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moviemate/pages/home_p.dart';
 
 class BookingHistory extends StatefulWidget {
@@ -31,12 +32,6 @@ class _BookingHistoryState extends State<BookingHistory> {
               color: Colors.black,
             ),
           ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back , color: Colors.black),
-          onPressed: () {
-            Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
-          },
-        ),
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: firestore.collection('users').doc(firestoreAuth.currentUser?.uid).collection('BookingHistory').snapshots(),
@@ -51,6 +46,9 @@ class _BookingHistoryState extends State<BookingHistory> {
                 itemCount: snapshot.data!.docs.length,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
+                  DateTime dateFrom = DateTime.parse(snapshot.data!.docs[index]['selectedDate']);
+
+                  String date = DateFormat("dd/MM/yyyy").format(dateFrom);
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(snapshot.data!.docs[index]['image_url']),
@@ -84,7 +82,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                 SizedBox(height: 15),
                                 Text('Selected Date', style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)),
                                 Divider(thickness: 2, color: Colors.grey),
-                                Text(snapshot.data!.docs[index]['selectedDate'].toString()),
+                                Text(date),
                                 SizedBox(height: 15),
                                 Text('Selected Seats', style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)),
                                 Divider(thickness: 2, color: Colors.grey),

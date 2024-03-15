@@ -8,6 +8,8 @@ import 'package:pinput/pinput.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dashboard.dart';
+
 
 class OtpGet extends StatefulWidget {
   const OtpGet({Key? key, required this.verificationId});
@@ -15,12 +17,7 @@ class OtpGet extends StatefulWidget {
 
   @override
   State<OtpGet> createState() => _OtpGetState();
-  static Route<dynamic> route(RouteSettings routeSettings) {
-    return CupertinoPageRoute(
-      builder: (_) => OtpGet(verificationId: '',),
-    );
   }
-}
 
 class _OtpGetState extends State<OtpGet> {
 
@@ -29,6 +26,9 @@ class _OtpGetState extends State<OtpGet> {
   String correctOTP = '';
   Future<void> _verifyOtp() async {
     try {
+      setState(() {
+        loading = true;
+      });
       // Create a PhoneAuthCredential using the verification ID and entered OTP
       final AuthCredential credential = PhoneAuthProvider.credential(
         smsCode: otpController.text,
@@ -49,7 +49,7 @@ class _OtpGetState extends State<OtpGet> {
         final userSnapshot = await FirebaseFirestore.instance.collection('users').doc(authResult.user?.uid).get();
         debugPrint("userSnapshot.exists:${userSnapshot.exists}");
         if(userSnapshot.exists){
-          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const HomeScreen()));
+          Navigator.push(context, CupertinoPageRoute(builder: (context)=>const Dashboard()));
         }else{
           Navigator.push(context, CupertinoPageRoute(builder: (context)=>const registration_p()));
         }
@@ -68,91 +68,106 @@ class _OtpGetState extends State<OtpGet> {
 
     }
   }
-  bool isLoading = true;
+  // bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 10, right: 15, bottom: 20),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Image.asset("assets/otp.png",
-                  height: 180,
-                ),
-              ),
-              SizedBox(height: 20,),
-              Text(
-                " OTP Verification",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                " we need to verify your otp !!!",
-                style: TextStyle(fontSize: 14),
-              ),
-              SizedBox(
-                height: 22,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15),
-                child: Pinput(
-                  controller: otpController,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  length: 6,
-                  // validator: (s) {
-                  //   return s == correctOTP ? null : 'incorrect pin';
-                  // },
+      body: Stack(
+        children:
+        [
+          Container(
+          margin: EdgeInsets.only(left: 10, right: 15, bottom: 20),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 40,
-                width: 300,
-                child: ElevatedButton(
-                  onPressed: () async{
-                    _verifyOtp();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //Icon(Icons.confirmation_num),
-                      Text("Verify OTP")
-                    ],
+                SizedBox(height: 20),
+                Center(
+                  child: Image.asset("assets/otp.png",
+                    height: 180,
                   ),
-                  style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)))),
                 ),
-              ),
-              TextButton(
-                  onPressed: () async{
-                   // Navigator.pushNamed(context, Routes.phoneScreen);
-                    Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
-                  },
-                  child: Text(
-                    'Edit Phone Number ?',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13),
-                  ))
-            ],
+                SizedBox(height: 20,),
+                Text(
+                  " OTP Verification",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  " we need to verify your otp !!!",
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  height: 22,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Pinput(
+                    controller: otpController,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    length: 6,
+                    // validator: (s) {
+                    //   return s == correctOTP ? null : 'incorrect pin';
+                    // },
+
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  height: 40,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () async{
+                      _verifyOtp();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //Icon(Icons.confirmation_num),
+                        Text("Verify OTP")
+                      ],
+                    ),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                        backgroundColor: MaterialStateProperty.all(Colors.black),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)))),
+                  ),
+                ),
+                TextButton(
+                    onPressed: () async{
+                     // Navigator.pushNamed(context, Routes.phoneScreen);
+                      Navigator.push(context, CupertinoPageRoute(builder: (context)=> PhoneAuth()));
+                    },
+                    child: Text(
+                      'Edit Phone Number ?',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13),
+                    ))
+              ],
+            ),
           ),
         ),
+          Visibility(
+            visible: loading, // Show loading indicator if loading is true
+            child: Container(
+              color: Colors.black.withOpacity(0.5), // Semi-transparent overlay
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          ),
+    ]
       ),
     );
   }

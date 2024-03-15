@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'Creditcard.dart';
 
 class SeatSelection extends StatefulWidget {
+  final String? location;
+  final String? CS_date;
   final String? theaterName;
   final String? showtime;
   final String movieName;
@@ -20,7 +22,7 @@ class SeatSelection extends StatefulWidget {
       this.showtime,
       required this.movieName,
       required this.imageUrl,
-      required this.selectedDate})
+      required this.selectedDate, this.location, this.CS_date})
       : super(key: key);
 
   @override
@@ -95,6 +97,7 @@ class _SeatSelectionState extends State<SeatSelection> {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection('AllBookingHistories').get();
+    List<String> allSeats = [];
     for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot in querySnapshot.docs){
       String theaterName = documentSnapshot['theaterName'];
       String showtime = documentSnapshot['showtime'];
@@ -114,10 +117,12 @@ class _SeatSelectionState extends State<SeatSelection> {
           showtime == widget.showtime &&
           movieName == widget.movieName &&
           date == secondDate){
-        setAllSeats.addAll(selectedSeats);
+        allSeats.addAll(selectedSeats);
 
       }
-
+      setState(() {
+        setAllSeats = allSeats;
+      });
     }
     // debugPrint("setAllSeats:${setAllSeats}");
   }
@@ -409,6 +414,9 @@ class _SeatSelectionState extends State<SeatSelection> {
   }
   void toggleSeatSelection(int row, int column, List<List<bool>> selectedSeats,
       BuildContext context) {
+    String seatIdentifier = '${String.fromCharCode(row + 65)}${column + 1}';
+    bool isBooked = setAllSeats.contains(seatIdentifier);
+debugPrint("isBooked:$isBooked setAllSeats :$setAllSeats");
     setState(() {
       if (selectedSeats[row][column]) {
         selectedSeats[row][column] = false;
@@ -461,7 +469,11 @@ class _SeatSelectionState extends State<SeatSelection> {
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[i].length; j++) {
         if (grid[i][j]) {
-          result.add('${String.fromCharCode(i + startingCharCode)}${j + 1}');
+          String seatIdentifier = '${String.fromCharCode(i + startingCharCode)}${j + 1}';
+          if (!setAllSeats.contains(seatIdentifier)) {
+            // Add the seat only if it's not already booked
+            result.add(seatIdentifier);
+          }
         }
       }
     }
@@ -471,10 +483,12 @@ class _SeatSelectionState extends State<SeatSelection> {
   double calculateTotalPrice(List<String> selectedSeats) {
     double total = 0.0;
     for (String seat in selectedSeats) {
-      if (seatPrices.containsKey(seat)) {
+      if (!setAllSeats.contains(seat) && seatPrices.containsKey(seat)) {
+        // Check if the seat is not booked and exists in the seatPrices map
         total += seatPrices[seat]!;
       }
     }
     return total;
   }
+
 }

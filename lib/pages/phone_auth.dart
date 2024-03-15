@@ -27,107 +27,114 @@ class _PhoneAuthState extends State<PhoneAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 15, right: 15, bottom: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipOval(
-                child: Image.asset(
-                  "assets/Movie-Ticket-Booking.png",
-                  height: 150,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                " Phone Verification",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                " We need to register your phone !!!",
-                style: TextStyle(fontSize: 14),
-              ),
-              SizedBox(
-                height: 22,
-              ),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: phonecontroller,
-                  onChanged: (value) {
-                    phone = value;
-                  },
-                  keyboardType: TextInputType.phone,
-                  maxLength: 10,
-                  decoration: InputDecoration(
-                    hintText: 'Enter phone number',
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    prefixIcon: Icon(Icons.call),
+      body: Stack(
+        children:
+        [
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15, bottom: 25),
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    "assets/Movie-Ticket-Booking.png",
+                    height: 150,
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 300,
-                child: errorText.isNotEmpty
-                    ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                    child: Text(
-                      errorText,
-                      style: TextStyle(color: Colors.red),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  " Phone Verification",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  " We need to register your phone !!!",
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  height: 22,
+                ),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: phonecontroller,
+                    onChanged: (value) {
+                      phone = value;
+                    },
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
+                    decoration: InputDecoration(
+                      hintText: 'Enter phone number',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      prefixIcon: Icon(Icons.call),
                     ),
                   ),
-                )
-                    : Container(),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 45,
-                width: 275,
-                child: ElevatedButton(
-                  onPressed: loading ? null : _sendOTP,
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                ),
+                SizedBox(
+                  width: 300,
+                  child: errorText.isNotEmpty
+                      ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                      child: Text(
+                        errorText,
+                        style: TextStyle(color: Colors.red),
                       ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.confirmation_num),
-                      SizedBox(width: 10),
-                      Text("Send the OTP"),
-                    ],
+                  )
+                      : Container(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 45,
+                  width: 275,
+                  child: ElevatedButton(
+                    onPressed: loading ? null : _sendOTP,
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.confirmation_num),
+                        SizedBox(width: 10),
+                        Text("Send the OTP"),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              if (loading)
-                SizedBox(height: 10),
-              if (loading)
-                CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Set color to blue
-                ), // Show loading indicator when loading is true
-            ],
+              ],
+            ),
           ),
         ),
+          Visibility(
+            visible: loading, // Show loading indicator if loading is true
+            child: Container(
+              color: Colors.black.withOpacity(0.5), // Semi-transparent overlay
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            ),
+          ),
+    ]
       ),
     );
   }

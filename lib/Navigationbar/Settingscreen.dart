@@ -60,12 +60,6 @@ class _SettingScreenState extends State<SettingScreen> {
               color: Colors.black,
             ),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeP()));
-            },
-          ),
         ),
         body: SingleChildScrollView(
           child: Column(

@@ -20,16 +20,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     final firestore = FirebaseFirestore.instance.collection('theater').snapshots();
 
     DateTime _selectedDate = DateTime.now();
-    DateTime _minDate = DateTime.now(); // Example minimum date
-    DateTime _maxDate = DateTime.now().add(Duration(days: 9)); // Example maximum date
 
 
     @override
     void initState(){
       super.initState();
       _selectedDate = DateTime.now();
-        _minDate = DateTime.now();
-      _maxDate = DateTime.now().add(const Duration(days: 10));
+      //   _minDate = DateTime.now();
+      // _maxDate = DateTime.now().add(const Duration(days: 10));
     }
 
     @override
@@ -105,7 +103,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
                       physics: BouncingScrollPhysics(),
                       itemCount: snapshots.data!.docs.length,
                       itemBuilder: (context, index) {
-                        // debugPrint("snapshots.data!.docs[index]:${snapshots.data!.docs[index]['name']}");
                         List<dynamic> showTime = snapshots.data?.docs[index]['showtime'];
                         String name = snapshots.data?.docs[index]['name'];
                         return Padding(

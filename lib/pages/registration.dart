@@ -7,6 +7,8 @@ import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dashboard.dart';
+
 class registration_p extends StatefulWidget {
   const registration_p({Key? key}) : super(key: key);
 
@@ -136,7 +138,7 @@ class _registration_pState extends State<registration_p> {
                 child: ElevatedButton(
                   onPressed: () async{
                     _validateFields();
-                  Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeScreen()));
+                  // Navigator.push(context, CupertinoPageRoute(builder: (context)=> Dashboard()));
                     },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.black,
@@ -216,7 +218,7 @@ class _registration_pState extends State<registration_p> {
         ),
       );
       // Navigate to the HomeP page only after successful form submission
-      Navigator.push(context, CupertinoPageRoute(builder: (context)=> HomeScreen()));
+      Navigator.push(context, CupertinoPageRoute(builder: (context)=> Dashboard()));
     })
         .catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(

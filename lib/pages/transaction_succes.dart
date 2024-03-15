@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moviemate/pages/dashboard.dart';
 import 'package:moviemate/pages/home_p.dart';
 
 import 'booking_history.dart';
@@ -77,6 +78,7 @@ Future<void> addbookinghistories() async {
             const SizedBox(height: 310),
             ElevatedButton(
               onPressed: () {
+                addbookinghistories();
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -91,7 +93,7 @@ Future<void> addbookinghistories() async {
                         IconButton(
                           icon: Icon(Icons.cancel),
                           onPressed: (){
-                            Navigator.push(context2, CupertinoPageRoute(builder: (context)=> HomeP()));
+                            Navigator.push(context2, CupertinoPageRoute(builder: (context)=> Dashboard()));
                           },
                         ),
                       ],

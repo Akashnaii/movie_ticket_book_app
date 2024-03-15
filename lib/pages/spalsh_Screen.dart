@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moviemate/pages/dashboard.dart';
 import 'package:moviemate/pages/home_p.dart';
 import 'package:moviemate/pages/phone_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Check if the user is already logged in
       if (isloggedIn ?? false) {
         Navigator.pushReplacement(
-            context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+            context, CupertinoPageRoute(builder: (context) => Dashboard()));
       } else {
         Navigator.pushReplacement(
             context, CupertinoPageRoute(builder: (context) => PhoneAuth()));
